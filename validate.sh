@@ -1,5 +1,8 @@
-#!/bin/bash
 
+#!/usr/bin/env bash
+
+# Force working directory to project folder
+cd /home/anshagrawal/day5_automation || exit 1
 
 LOG_FILE_PATH="logs/validate.log"
 
