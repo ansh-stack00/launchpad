@@ -1,1 +1,1 @@
-const comp = "hestabit"
+const comp = 'hestabit';
