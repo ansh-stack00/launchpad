@@ -1,0 +1,49 @@
+{
+  "totalWords": 4750002,
+  "uniqueWords": 19,
+  "longestWord": "consectetur",
+  "shortestWord": "g",
+  "topWords": [
+    {
+      "word": "ipsum",
+      "count": 187500
+    },
+    {
+      "word": "dolor",
+      "count": 187500
+    },
+    {
+      "word": "sit",
+      "count": 187500
+    },
+    {
+      "word": "elit",
+      "count": 187500
+    },
+    {
+      "word": "sed",
+      "count": 187500
+    },
+    {
+      "word": "do",
+      "count": 187500
+    },
+    {
+      "word": "eiusmod",
+      "count": 125001
+    },
+    {
+      "word": "ut",
+      "count": 125001
+    },
+    {
+      "word": "labore",
+      "count": 125001
+    },
+    {
+      "word": "et",
+      "count": 125001
+    }
+  ],
+  "timeTaken": 461
+}
