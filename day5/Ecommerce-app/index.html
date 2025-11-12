@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    
+    <header>
+        <nav>
+            <div class="logo">🛍️ ShopHub</div>
+            <div class="nav-actions">
+                <div class="cart-icon">🛒 Cart (0)</div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Controls -->
+    <div class="controls">
+        <div class="search-box">
+            <input 
+                type="text" 
+                id="searchInput" 
+                placeholder="🔍 Search products..."
+            >
+        </div>
+        <div class="sort-box">
+            <select id="sortSelect">
+                <option value="">Sort by</option>
+                <option value="price-high">Price: High to Low</option>
+                <option value="price-low">Price: Low to High</option>
+                <option value="name">Name: A to Z</option>
+                <option value="rating">Rating: High to Low</option>
+            </select>
+        </div>
+        <div class="results-info" id="resultsInfo"></div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading" id="loading">
+        <div class="spinner"></div>
+        <p>Loading amazing products...</p>
+    </div>
+
+    <!-- Products Container -->
+    <div class="container">
+        <div class="product-grid" id="productGrid"></div>
+        <div class="no-results" id="noResults" style="display: none;">
+            <h2>😔 No products found</h2>
+            <p>Try adjusting your search or filters</p>
+        </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="./script.js"></script>
+</body>
+</html>
