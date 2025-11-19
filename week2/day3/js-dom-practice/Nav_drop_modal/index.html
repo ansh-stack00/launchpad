@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Navbar + Dropdown + Modal</title>
+  <link rel="stylesheet" href="/js-dom-practice/Nav_drop_modal/style.css">
+</head>
+<body>
+
+ 
+  <nav class="navbar">
+    <div class="brand">MySite</div>
+    <button class="toggle-btn">☰</button>
+    <ul class="nav-links">
+      <li><a href="#">Home</a></li>
+      <li class="dropdown">
+        <a href="#" class="drop-btn">Services ▾</a>
+        <ul class="dropdown-content">
+          <li><a href="#">Web Design</a></li>
+          <li><a href="#">App Development</a></li>
+          <li><a href="#">SEO</a></li>
+        </ul>
+      </li>
+      <li><a href="#" id="openModal">Contact</a></li>
+    </ul>
+  </nav>
+
+ 
+  <div class="modal" id="modal">
+    <div class="modal-content">
+      <span class="close-btn" id="closeModal">&times;</span>
+      <h2>Contact Us</h2>
+      <p>Fill out the form or reach out directly at <strong>contact@mysite.com</strong></p>
+      <button id="closeModalBtn">Close</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
