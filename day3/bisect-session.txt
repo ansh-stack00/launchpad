@@ -1,0 +1,58 @@
+Script started on 2025-11-05 17:01:09+05:30 [TERM="xterm-256color" TTY="/dev/pts/0" COLUMNS="184" LINES="45"]
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ exitgit bisect good [3Pnode file7.jsgit bisect good [3Pnode file5.jsgit bisect good 038a28e[4Pbad HEAD[2Pstart 
+[?2004lPrevious HEAD position was 6bfbcd7 Commit 7: Add string manipulation file
+Switched to branch 'main'
+status: waiting for both good and bad commits
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect start exit[Kgit bisect good [3Pnode file7.jsgit bisect good [3Pnode file5.jsgit bisect good 038a28e[4Pbad HEAD[K[K[K[K[K[K[K[K[K[K[K[K[K[K[Klog --oneline
+[?2004l[?1h=[33m6406eed[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m Commit 8: Add final summary file[m
+[33m6bfbcd7[m Commit 7: Add string manipulation file[m
+[33m9a091f3[m Commit 6: Add object demo[m
+[33ma88ad7d[m Commit 5: Add array operations file[m
+[33m29c381b[m Commit 4: Introduce a bug (division by zero)[m
+[33m56a61b3[m Commit 3: Add file3.js with greeting function[m
+[33m038a28e[m Commit 2: Add file2.js[m
+[33m26de55e[m Commit 1: Add file1.js[m
+[K[?1l>[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect bad [7m9a091f3[27m9a091f3
+[?2004lstatus: waiting for good commit(s), bad commit known
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect good [7m038a28e[27m038a28e
+[?2004lBisecting: 1 revision left to test after this (roughly 1 step)
+[29c381b331d41ec8af49cc668840b9866faf55d6] Commit 4: Introduce a bug (division by zero)
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisec[K[K[K[K[K[K[K[K[Knode file4.js
+[?2004lFile 4: Buggy file
+Result: Infinity
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect 4
+[?2004lerror: Invalid command: you're currently in a bad/good bisect
+fatal: unknown command: '4'
+
+usage: git bisect start [--term-(new|bad)=<term> --term-(old|good)=<term>]    [--no-checkout] [--first-parent] [<bad> [<good>...]] [--]    [<pathspec>...]
+   or: git bisect (good|bad) [<rev>...]
+   or: git bisect terms [--term-good | --term-bad]
+   or: git bisect skip [(<rev>|<range>)...]
+   or: git bisect next
+   or: git bisect reset [<commit>]
+   or: git bisect visualize
+   or: git bisect replay <logfile>
+   or: git bisect log
+   or: git bisect run <cmd> [<arg>...]
+
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect 4[Kbad 
+[?2004lBisecting: 0 revisions left to test after this (roughly 0 steps)
+[56a61b326fcb09b4a7aa7d631bd7abc795bb15e8] Commit 3: Add file3.js with greeting function
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git [K[K[K[Knode fie[Kle3.js
+[?2004lFile 3: Greeting function
+Hello JS
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ git bisect good 
+[?2004l29c381b331d41ec8af49cc668840b9866faf55d6 is the first bad commit
+[33mcommit 29c381b331d41ec8af49cc668840b9866faf55d6[m
+Author: ansh-stack00 <ansha.hestabit@gmail.com>
+Date:   Wed Nov 5 16:40:21 2025 +0530
+
+    Commit 4: Introduce a bug (division by zero)
+
+ file4.js | 1 [32m+[m
+ 1 file changed, 1 insertion(+)
+ create mode 100644 file4.js
+[?2004h]0;anshagrawal@hestabit-Latitude-3450: ~/git-mastery[01;32manshagrawal@hestabit-Latitude-3450[00m:[01;34m~/git-mastery[00m$ exit 
+[?2004lexit
+
+Script done on 2025-11-05 17:03:37+05:30 [COMMAND_EXIT_CODE="0"]
