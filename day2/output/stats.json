@@ -1,0 +1,49 @@
+{
+  "totalWords": 3000000,
+  "uniqueWords": 14,
+  "longestWord": "consectetur",
+  "shortestWord": "lorem",
+  "topWords": [
+    {
+      "word": "lorem",
+      "count": 250000
+    },
+    {
+      "word": "ipsum",
+      "count": 250000
+    },
+    {
+      "word": "dolor",
+      "count": 250000
+    },
+    {
+      "word": "consectetur",
+      "count": 250000
+    },
+    {
+      "word": "eiusmod",
+      "count": 250000
+    },
+    {
+      "word": "tempor",
+      "count": 250000
+    },
+    {
+      "word": "labore",
+      "count": 250000
+    },
+    {
+      "word": "dolore",
+      "count": 250000
+    },
+    {
+      "word": "magna",
+      "count": 250000
+    },
+    {
+      "word": "aliqua",
+      "count": 250000
+    }
+  ],
+  "timeTaken": 416
+}
