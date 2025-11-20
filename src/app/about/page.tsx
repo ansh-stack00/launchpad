@@ -10,9 +10,11 @@ import {
 import Navbar from "@/components/ui/Navbar";
 
 export default function AboutPage() {
+
+    
   return (
     <div className="p-10 text-white ">
-        <Navbar classes=" rounded-3xl w-6xl mb-16 ml-64 px-16"/>
+        <Navbar classes=" rounded-3xl w-md lg:w-6xl mb-16 ml-6 lg:ml-64 px-16"/>
       {/* Hero Section */}
       <section className="mb-16">
         <h1 className="text-5xl font-bold mb-4 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
@@ -57,7 +59,7 @@ export default function AboutPage() {
         <h2 className="text-4xl font-bold mb-10">What We Offer</h2>
 
         <div className="grid md:grid-cols-3 gap-8">
-          {/* Card 1 */}
+      
           <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:bg-white/10 transition">
             <FontAwesomeIcon
               icon={faCode}
@@ -69,7 +71,7 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Card 2 */}
+       
           <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:bg-white/10 transition">
             <FontAwesomeIcon
               icon={faUsers}
@@ -81,7 +83,6 @@ export default function AboutPage() {
             </p>
           </div>
 
-          {/* Card 3 */}
           <div className="bg-white/5 p-6 rounded-xl border border-white/10 hover:bg-white/10 transition">
             <FontAwesomeIcon
               icon={faBolt}
