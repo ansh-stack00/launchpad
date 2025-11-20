@@ -21,7 +21,7 @@ export default function Modal({ open, onClose, children } : MyModalProps) {
           ✕
         </button>
 
-        <h2 className="text-xl font-semibold mb-4">Details</h2>
+        <h2 className="text-xl text-gray-900 font-bold mb-4">Details</h2>
 
         <div className="text-gray-800">{children}</div>
       </div>

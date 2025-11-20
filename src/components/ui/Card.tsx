@@ -16,10 +16,11 @@ export default function Card({ title, colorClass, onViewDetails } : CardProps) {
         flex flex-col justify-between
         transform transition-all duration-300 cursor-pointer
         hover:scale-105 hover:-translate-y-1 hover:shadow-xl
+        
       `}
     >
       <h3 className="text-lg font-semibold">{title}</h3>
-
+    <br className="text-amber-50"></br>
       <button
         onClick={onViewDetails}
         className="mt-6 font-medium flex items-center gap-1 group"

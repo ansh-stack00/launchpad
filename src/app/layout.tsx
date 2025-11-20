@@ -1,12 +1,11 @@
-
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import "./globals.css";
+import "./globals.css"
 import { config } from "@fortawesome/fontawesome-svg-core";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 import Navbar from "@/components/ui/Navbar";
 import Sidebar from "@/components/ui/Sidebar";
-import Button from "@/components/ui/Button";
+
 
 
 config.autoAddCss = false;
@@ -34,17 +33,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable} antialiased`}>
-        <Navbar />
-
-        <div className="flex">
-          <Sidebar />
-
-          
-          <main className="flex-1 p-6 ">
+      <body className={`${geistSans.variable} ${geistMono.variable} antialiased `} >
+       
+      
+          <main className="flex-1  ">
             {children}
           </main>
-        </div>
+        
       </body>
     </html>
   );
