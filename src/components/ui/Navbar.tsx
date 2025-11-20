@@ -3,10 +3,12 @@ import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { faUser } from "@fortawesome/free-solid-svg-icons";
 
-export default function Navbar() {
+export default function Navbar({
+    classes = ""
+}) {
    return (
     <>
-        <header className="flex justify-between items-center w-full h-20 bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg px-6 ">
+        <header className={`flex justify-between items-center h-20 bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg px-6 ${classes} `}>
             <div className="box1 bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-lg flex items-center justify-between gap-40 hover:shadow-md transition-shadow"> 
                 <h1 className="text-white font-semibold text-lg">Start BootStrap</h1>
                 <FontAwesomeIcon icon={faBars} className="text-white text-lg cursor-pointer hover:opacity-80 transition-opacity" />

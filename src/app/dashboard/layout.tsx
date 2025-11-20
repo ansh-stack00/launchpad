@@ -9,7 +9,7 @@ export default function DashboardLayout({
 }) {
   return (
     <div className="min-h-screen flex flex-col ">
-      <Navbar />
+      <Navbar classes="w-full "/>
 
       <div className="flex ">
         <Sidebar />
