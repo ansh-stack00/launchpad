@@ -18,7 +18,7 @@ export default function LoginPage() {
             type="text"
             placeholder="Username"
             className="bg-transparent outline-none w-full"
-          />
+          /> 
         </div>
 
         <div className="flex items-center gap-3 p-2 bg-gray-200 rounded-md">

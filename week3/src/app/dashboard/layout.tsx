@@ -8,8 +8,8 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen max-h-screen flex flex-col  ">
-      <Navbar classes="w-full "/>
+    <div className=" flex flex-col  overflow-clip">
+      <Navbar />
 
       <div className="flex ">
         <Sidebar />

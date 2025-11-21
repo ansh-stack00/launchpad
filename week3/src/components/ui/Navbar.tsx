@@ -14,12 +14,12 @@ export default function Navbar({ classes = "" }) {
 
   return (
     <header
-      className={`bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg px-6 py-4 rounded-xl ${classes}`}
+      className={` bg-gradient-to-r from-slate-900 to-slate-800 shadow-lg px-6 py-4 rounded-xl ${classes}`}
     >
       <div className="flex justify-between items-center">
-        {/* Logo + Hamburger */}
+        
         <div className="flex items-center gap-4">
-          {/* Mobile Menu Button */}
+          
           <button
             className="md:hidden text-white text-2xl"
             onClick={() => setMenuOpen(!menuOpen)}
@@ -27,13 +27,12 @@ export default function Navbar({ classes = "" }) {
             <FontAwesomeIcon icon={menuOpen ? faXmark : faBars} />
           </button>
 
-          {/* Logo */}
+          
           <div className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-lg shadow-md">
             <h1 className="text-white font-semibold text-lg">Start BootStrap</h1>
           </div>
         </div>
 
-        {/* Desktop Search + User */}
         <div className="hidden md:flex items-center gap-4">
           {/* Search Bar */}
           <div className="bg-slate-700 rounded-lg px-4 py-2 flex items-center gap-2 shadow-md hover:bg-slate-600 transition-colors">

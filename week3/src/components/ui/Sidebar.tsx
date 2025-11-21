@@ -9,7 +9,7 @@ import {
 
 export default function Sidebar() {
   return (
-    <div className="h-screen w-64 bg-gradient-to-b from-slate-800 to-slate-900 shadow-xl p-4">
+    <div className="hidden md:block h-screen w-64 bg-gradient-to-b from-slate-800 to-slate-900 shadow-xl p-4">
       
       {/* Core Section */}
       <div className="mb-6 flex flex-col">
