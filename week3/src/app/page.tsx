@@ -4,12 +4,12 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faArrowRight,
   faCode,
-  faTableCellsLarge, // instead of Layout
-  faLayerGroup,     // instead of Layers
+  faTableCellsLarge, 
+  faLayerGroup,     
   faGlobe,
-  faBolt,           // instead of Zap
+  faBolt,          
   faBookOpen,
-  faCircleCheck,    // instead of CheckCircle
+  faCircleCheck,   
   faStar
 } from "@fortawesome/free-solid-svg-icons";
 
