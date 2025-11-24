@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
-  const [activeDay, setActiveDay] = useState(0);
+  const [activeDay, setActiveDay] = useState<number>(0);
 
   const router = useRouter();
 
