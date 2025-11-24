@@ -8,8 +8,11 @@ import {
   faUser,
   faXmark,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 export default function Navbar({ classes = "" }) {
+
+  const router = useRouter();
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
@@ -28,7 +31,7 @@ export default function Navbar({ classes = "" }) {
           </button>
 
           
-          <div className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-lg shadow-md">
+          <div onClick={() => router.push('/')} className="bg-gradient-to-r from-blue-600 to-blue-500 px-5 py-2 rounded-lg shadow-md hover:cursor-pointer">
             <h1 className="text-white font-semibold text-lg">Start BootStrap</h1>
           </div>
         </div>
@@ -45,7 +48,7 @@ export default function Navbar({ classes = "" }) {
           </div>
 
           {/* User */}
-          <div className="bg-slate-700 rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-600 transition-colors cursor-pointer shadow-md">
+          <div onClick={e => router.push('/dashboard/profile')} className="bg-slate-700 rounded-full w-10 h-10 flex items-center justify-center hover:bg-slate-600 transition-colors cursor-pointer shadow-md">
             <FontAwesomeIcon icon={faUser} className="text-slate-200 text-lg" />
           </div>
         </div>

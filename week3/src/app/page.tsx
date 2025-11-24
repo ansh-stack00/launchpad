@@ -12,10 +12,13 @@ import {
   faCircleCheck,   
   faStar
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
   const [activeDay, setActiveDay] = useState(null);
+
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => setScrollY(window.scrollY);
@@ -120,6 +123,9 @@ export default function LandingPage() {
     },
   ];
 
+
+
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white overflow-hidden">
       {/* Animated Background Elements */}
@@ -165,7 +171,7 @@ export default function LandingPage() {
             className="flex flex-wrap gap-4 justify-center animate-slideUp"
             style={{ animationDelay: "0.4s" }}
           >
-            <button className="group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2">
+            <button onClick={e => router.push(`/login`)} className=" group px-8 py-4 bg-gradient-to-r from-blue-600 to-purple-600 rounded-lg font-semibold text-lg hover:shadow-2xl hover:shadow-purple-500/50 transition-all duration-300 hover:scale-105 flex items-center gap-2 hover:cursor-pointer">
               Start Learning
               <FontAwesomeIcon
                 icon={faArrowRight}

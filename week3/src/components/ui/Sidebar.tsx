@@ -1,3 +1,5 @@
+"use client";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGauge } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -6,8 +8,13 @@ import {
   faChartPie,
   faTable,
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
+
 
 export default function Sidebar() {
+  const router = useRouter();
+
+
   return (
     <div className="hidden md:block h-screen w-64 bg-gradient-to-b from-slate-800 to-slate-900 shadow-xl p-4">
       
@@ -17,7 +24,7 @@ export default function Sidebar() {
           Core
         </h4>
 
-        <div className="mt-3 text-slate-300 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors shadow-md font-medium flex items-center gap-3">
+        <div onClick={()=> router.push('/dashboard')} className="mt-3 text-slate-300 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors shadow-md font-medium flex items-center gap-3">
           <FontAwesomeIcon icon={faGauge} className="text-slate-200 text-lg" />
           <span>Dashboard</span>
         </div>
@@ -34,7 +41,7 @@ export default function Sidebar() {
           <span>Layouts</span>
         </div>
 
-        <div className="mt-3 flex items-center gap-3 text-slate-300 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors">
+        <div onClick={()=> router.push('/dashboard/user')} className="mt-3 flex items-center gap-3 text-slate-300 px-4 py-2.5 rounded-lg cursor-pointer hover:bg-slate-700 transition-colors">
           <FontAwesomeIcon icon={faFileLines} className="text-slate-200 text-lg" />
           <span>Pages</span>
         </div>

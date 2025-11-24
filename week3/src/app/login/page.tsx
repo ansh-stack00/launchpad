@@ -1,11 +1,15 @@
+"use client"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { 
     faUser, 
     faLock 
 } from "@fortawesome/free-solid-svg-icons";
+import { useRouter } from "next/navigation";
 
 
 export default function LoginPage() {
+
+  const router = useRouter();
   return (
     <div className="h-full w-full flex justify-center items-center bg-gray-100">
       <div className="w-[50%] h-[60%]  p-6 rounded-lg shadow-lg space-y-5 ">
@@ -42,7 +46,7 @@ export default function LoginPage() {
         </div>
 
       
-        <button className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition mt-3.5">
+        <button onClick={e => router.push(`/dashboard`)} className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition mt-3.5">
           Login
         </button>
       </div>
