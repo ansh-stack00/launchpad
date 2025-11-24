@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 
 export default function LandingPage() {
   const [scrollY, setScrollY] = useState(0);
-  const [activeDay, setActiveDay] = useState(null);
+  const [activeDay, setActiveDay] = useState(0);
 
   const router = useRouter();
 
@@ -232,7 +232,7 @@ export default function LandingPage() {
                 key={day.day}
                 className="group relative bg-white/5 backdrop-blur-sm rounded-2xl border border-white/10 overflow-hidden hover:border-white/30 transition-all duration-500 hover:scale-[1.02]"
                 onMouseEnter={() => setActiveDay(day.day)}
-                onMouseLeave={() => setActiveDay(null)}
+                onMouseLeave={() => setActiveDay(0)}
               >
                 {/* Gradient Overlay */}
                 <div
