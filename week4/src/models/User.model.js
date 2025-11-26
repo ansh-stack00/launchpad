@@ -61,6 +61,8 @@ userSchema.methods.isPasswordCorrect = async function(password) {
     return await bcrypt.compare(password , this.password);
 }
 
+userSchema.index({ status: 1, createdAt: -1 });
+
 // creating a model 
 const User = new mongoose.model("User" , userSchema);
 
