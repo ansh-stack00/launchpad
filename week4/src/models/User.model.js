@@ -40,6 +40,12 @@ const userSchema = new Schema(
     }
 )
 
+
+// adding virtual fields
+
+userSchema.virtual("fullName").get(function() {
+    return this.firstName + this.lastName ;
+})
 // hash the password before saving it to db 
 
 userSchema.pre("save" , async function(next) {
