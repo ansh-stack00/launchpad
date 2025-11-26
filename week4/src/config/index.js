@@ -14,7 +14,7 @@ export default function loadConfig() {
     }[env] || ".env.local"
 
     // resolving path for dotenv
-    const resolvedPath = path.resolve(process.cwd , envFile); 
+    const resolvedPath = path.resolve(process.cwd() , envFile); 
 
     dotenv.config({
         path:resolvedPath

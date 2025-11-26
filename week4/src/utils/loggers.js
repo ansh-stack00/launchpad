@@ -1,10 +1,10 @@
 import winston from "winston";
 import fs from "fs";
-
+import path from "path";
 
 // check if logs dir exist or not 
 //  resolved to src/logs
-const logDir = path.join(process.cwd , "src", "logs")
+const logDir = path.join(process.cwd() , "src","logs")
 
 if(!fs.existsSync(logDir)) {
     fs.mkdirSync(logDir , { recursive:true })
