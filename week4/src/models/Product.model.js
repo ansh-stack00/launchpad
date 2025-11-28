@@ -1,45 +1,51 @@
 import mongoose, { Schema } from "mongoose";
 
-const productSchema = new Schema(
-  {
-    name: {
-      type: String,
-      required: [true, "Product name is required"],
-      trim: true,
-    },
+const productSchema = new Schema( {
 
-    price: {
-      type: Number,
-      required: true,
-      min: 1,
-    },
-
-    category: {
-      type: String,
-      enum: ["electronics", "fashion", "grocery", "other"],
-      default: "other",
-    },
-
-    rating: {
-      type: Number,
-      min: 0,
-      max: 5,
-      default: 0,
-    },
-
-    status: {
-      type: String,
-      enum: ["active", "archived"],
-      default: "active",
-    },
+  prdName : {
+    type : String,
+    required : [true , "product name is required"],
+    trim : true
   },
-    { 
-        timestamps: true 
-    }
+  description : {
+    type : String ,
+    required : [true , "description is required"],
+    trim : true, 
+  },
+  price : {
+    type : Number ,
+    required : true
+  },
+  tags: [ String ],
+  status : {
+    type : String ,
+    enum : ['active' , 'pending' , 'cancelled'],
+    default : 'pending',
 
-);
+  },
+  createdAt : {
+    type : Date,
+    default : Date.now
+  },
+  updatedAt : {
+    type : Date,
+    default : Date.now
+  },
+  deletedAt : {
+    type : Date,
+    default : null
+  }
+
+})
 
 
+// pre-save hook for updating the product 
+productSchema.pre("save" , function(next) {
+  this.updatedAt = Date.now();
+  next();
+})
+
+// virtual field 
 productSchema.virtual("priceWithTax").get(function () {
   return this.price * 1.18;
 });
