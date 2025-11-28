@@ -9,6 +9,8 @@ import loadConfig from "../config/index.js";
 // import routes here 
     
 import productRoutes from "../routes/product.routes.js"
+import router from "../routes/product.routes.js";
+import applySecurity from "../middlewares/security.middleware.js";
 
 
 const initApp = async() => {
@@ -36,6 +38,8 @@ const initApp = async() => {
     app.use(express.static("public"));
     app.use(cookieParser());
 
+    applySecurity(app);
+
     logger.info("middlewares loaded !!")
 
 
@@ -46,7 +50,7 @@ const initApp = async() => {
      // routes declaration
      app.use("/product" , productRoutes)
 
-    // logger.info(`✔ Routes mounted: ${routes.stack.length} endpoints`);
+    logger.info(`✔ Routes mounted: ${router.stack.length} endpoints`);
 
 
     return app;
