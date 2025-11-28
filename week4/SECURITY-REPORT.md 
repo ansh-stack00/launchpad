@@ -1,0 +1,46 @@
+# SECURITY-REPORT.md
+
+## Security Testing Report
+
+**Date:** 2025-11-28  
+
+
+---
+
+### 1. Input Validation
+- **Test:** Send empty fields for product creation
+- **Result:** 400 error returned, validation works
+
+- **Test:** Invalid email in user registration
+- **Result:**  400 error returned
+
+---
+
+### 2. Rate Limiting
+- **Test:** Send >1 requests in 15 minutes from same IP
+- **Result:** Request blocked with 429 status
+
+---
+
+### 4. Security Headers (Helmet)
+- **Test:** Check response headers
+- **Result:** X-Content-Type-Options, X-XSS-Protection, Content-Security-Policy set
+
+---
+
+### 5. Payload Size Limit
+- **Test:** Send request >10kb
+- **Result:** Request rejected
+
+---
+
+### 6. NoSQL Injection / XSS
+- **Test:** Send MongoDB operators in input like {"$gt":""}
+- **Result:** Sanitized, request rejected
+- **Test:** Send `<script>alert(1)</script>` in input
+- **Result:** XSS cleaned
+
+---
+
+**Conclusion:**  
+All security measures implemented successfully. API passes validation, rate limiting, header protection, and sanitization.
