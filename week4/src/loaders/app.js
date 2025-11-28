@@ -5,6 +5,10 @@ import cookieParser from "cookie-parser";
 import connectDb from "./db.js";
 import logger from "../utils/loggers.js";
 import loadConfig from "../config/index.js";
+    
+// import routes here 
+    
+import productRoutes from "../routes/product.routes.js"
 
 
 const initApp = async() => {
@@ -38,13 +42,9 @@ const initApp = async() => {
     logger.info("connecting to database!");
     await connectDb(config.dbURI);
     
-
-    // import routes here 
- 
-
-    logger.info("⏳ Mounting routes...");
+    
      // routes declaration
-
+     app.use("/product" , productRoutes)
 
     // logger.info(`✔ Routes mounted: ${routes.stack.length} endpoints`);
 

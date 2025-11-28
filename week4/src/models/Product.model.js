@@ -42,7 +42,7 @@ const productSchema = new Schema( {
 // pre-save hook for updating the product 
 productSchema.pre("save" , function(next) {
   this.updatedAt = Date.now();
-  next();
+  next;
 })
 
 // virtual field 
