@@ -7,7 +7,7 @@ import logger from "../utils/loggers.js";
 import loadConfig from "../config/index.js";
     
 // import routes here 
-    
+import connectRoutes from "../routes/connect.routes.js"
 import productRoutes from "../routes/product.routes.js"
 import router from "../routes/product.routes.js";
 import applySecurity from "../middlewares/security.middleware.js";
@@ -49,8 +49,9 @@ const initApp = async() => {
     
      // routes declaration
      app.use("/product" , productRoutes)
+     app.use("/connect",connectRoutes) 
 
-    logger.info(`✔ Routes mounted: ${router.stack.length} endpoints`);
+    logger.info(`Routes mounted: ${router.stack.length} endpoints`);
 
 
     return app;
