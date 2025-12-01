@@ -1,11 +1,13 @@
 import helmet from "helmet";
 import rateLimit from "express-rate-limit";
 import cors from "cors";
+import hpp from "hpp";
 
 const applySecurity = (app) => {
   
   app.use(helmet());
 
+  app.use(hpp());
   
   app.use(
     cors({
