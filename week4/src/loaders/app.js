@@ -11,6 +11,7 @@ import connectRoutes from "../routes/connect.routes.js"
 import productRoutes from "../routes/product.routes.js"
 import router from "../routes/product.routes.js";
 import applySecurity from "../middlewares/security.middleware.js";
+import tracingMiddleware from "../utils/tracing.js";
 
 
 const initApp = async() => {
@@ -39,6 +40,9 @@ const initApp = async() => {
     app.use(cookieParser());
 
     applySecurity(app);
+
+    // middleware to trace request 
+    app.use(tracingMiddleware);
 
     logger.info("middlewares loaded !!")
 
