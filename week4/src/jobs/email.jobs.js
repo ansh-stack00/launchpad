@@ -1,6 +1,7 @@
 import { Queue , Worker } from "bullmq";
 import sendEmail from "../utils/emailSender.js";
 import  { Redis } from "ioredis";
+import logger from "../utils/loggers.js";
 
 
 const connection = new Redis({
@@ -42,10 +43,12 @@ const emailWorker = new Worker(
 
 emailWorker.on("completed", (job) => {
   console.log(`Job ${job.id} completed`);
+  logger.info(`Job ${job.id} completed`);
 });
 
 emailWorker.on("failed", (job, err) => {
-  console.error(`Job ${job.id} failed: ${err.message}`);
+  console.error(`Job ${job.id} failed: ${err.message}`) ; 
+  logger.warn(`Job ${job.id} failed: ${err.message}`) ;
 });
 
 export default addEmailJob
