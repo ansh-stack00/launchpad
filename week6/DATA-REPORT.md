@@ -73,3 +73,35 @@ A heatmap of missing values was generated to visualize which columns contain mis
 - **Cabin** also has many missing values, which could be ignored for now as it is not critical to the analysis.
 
 
+
+
+### Day2. FEATURE ENGINEERING AND FEATURE SELECTION 
+
+## Overview
+This document describes the feature engineering and feature selection process.
+
+## Feature Engineering Steps
+1. Loaded cleaned dataset from `data/processed/final.csv`
+2. Created new numerical features:
+   - Log transformation
+   - Square root transformation
+   - Squared features
+3. Encoded categorical features using One-Hot Encoding
+4. Scaled numerical features using StandardScaler
+5. Split data into train and test sets
+
+## Feature Selection
+- Method: Mutual Information
+- Selected top 20 most important features
+- Feature importance plot generated
+
+## Output Files
+- X_train.npy
+- X_test.npy
+- y_train.npy
+- y_test.npy
+- feature_list.json
+- selected_features.json
+
+
+
