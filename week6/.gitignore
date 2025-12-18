@@ -18,3 +18,5 @@ logs/
 
 # Jupyter
 .ipynb_checkpoints/
+
+/src/models

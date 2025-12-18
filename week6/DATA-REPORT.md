@@ -103,5 +103,104 @@ This document describes the feature engineering and feature selection process.
 - feature_list.json
 - selected_features.json
 
+-------
+
+
+
+
+# Day 3 — Model Building & Training Pipeline (Titanic Dataset)
+
+## Objective
+The goal of Day 3 is to build a robust and reusable machine learning training pipeline
+that trains multiple models, evaluates them using cross-validation, compares performance,
+and automatically selects and saves the best model.
+
+---
+
+## Dataset
+**Name:** Titanic Survival Dataset  
+**Target Variable:** `Survived`  
+- `0` → Passenger did not survive  
+- `1` → Passenger survived  
+
+The dataset used for training was preprocessed and feature-engineered during Day 1 and Day 2.
+
+---
+
+## Models Trained
+The following models were trained and evaluated:
+
+1. **Logistic Regression**
+   - Linear baseline model
+   - Used L2 regularization
+   - Class imbalance handled using `class_weight="balanced"`
+
+2. **Random Forest Classifier**
+   - Ensemble-based tree model
+   - Captures non-linear feature interactions
+   - Robust to outliers and feature scaling
+
+3. **Gradient Boosting / XGBoost**
+   - Boosting-based ensemble model
+   - Improves performance by correcting previous errors
+   - Provides strong results on tabular data
+
+4. **Neural Network (MLPClassifier)**
+   - Multi-layer perceptron
+   - Captures complex patterns
+   - Requires scaled input features
+
+---
+
+## Training Strategy
+
+### Cross-Validation
+- **Method:** Stratified K-Fold Cross-Validation
+- **Number of folds:** 5
+- Ensures class balance in each fold
+- Helps prevent overfitting and underfitting
+
+### Evaluation Metrics
+Each model was evaluated using the following metrics:
+
+- **Accuracy**
+- **Precision**
+- **Recall**
+- **F1 Score**
+- **ROC-AUC**
+
+The **F1 Score** was used as the primary metric for model selection due to class imbalance.
+
+---
+
+## Model Comparison Summary
+
+| Model | Accuracy | Precision | Recall | F1 Score | ROC-AUC |
+|------|----------|-----------|--------|----------|---------|
+| Logistic Regression | Recorded | Recorded | Recorded | Recorded | Recorded |
+| Random Forest | Recorded | Recorded | Recorded | Recorded | Recorded |
+| Gradient Boosting / XGBoost | Recorded | Recorded | Recorded | Recorded | Recorded |
+| Neural Network | Recorded | Recorded | Recorded | Recorded | Recorded |
+
+*(Exact values are stored in `src/evaluation/metrics.json`)*
+
+---
+
+## Best Model Selection
+
+### Best Model
+**Random Forest Classifier** **
+
+### Selection Criteria
+- Highest **F1 Score** on test data
+- Balanced precision and recall
+- Stable cross-validation performance
+
+---
+
+## Model Artifacts
+
+The following artifacts were generated automatically:
+
 
 
