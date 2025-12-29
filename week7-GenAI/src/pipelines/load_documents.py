@@ -30,4 +30,3 @@ if __name__ =="__main__":
     docs = load_doc()
 
     print(f"Loaded {len(docs)} documents\n")
-    print(docs[12])
