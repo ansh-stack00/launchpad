@@ -1,8 +1,9 @@
 from dotenv import load_dotenv
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
-
+import os
 load_dotenv()
 
+print("DEBUG GOOGLE_API_KEY:", os.getenv("GOOGLE_API_KEY"))
 def get_embedding_model():
     return GoogleGenerativeAIEmbeddings(
         model="models/text-embedding-004"
