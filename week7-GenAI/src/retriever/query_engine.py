@@ -14,8 +14,6 @@ vector_db = QdrantVectorStore.from_existing_collection(
     url="http://localhost:6333",
     collection_name="enterprise_docs",
     embedding=embedding_model,
-
-
 )
 
 # take user  input
