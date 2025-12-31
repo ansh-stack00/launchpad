@@ -1,32 +1,41 @@
-from src.embeddings.embedder import get_embedding_model
+from src.embeddings.embedder import (get_embedding_model,get_sparse_embedding_model)
 from src.generator.llm_client import get_llm
 from dotenv import load_dotenv
-from qdrant_client import QdrantClient
+from langchain_qdrant import  RetrievalMode
 from langchain_qdrant import QdrantVectorStore
 
 
 load_dotenv()
 
 embedding_model = get_embedding_model()
-
+sparse_embedding = get_sparse_embedding_model()
 client = get_llm()
 
-qdrant_client = QdrantClient(
-    host="localhost",
-    port=6333
-)
+
+
 
 vector_db = QdrantVectorStore.from_existing_collection(
     url="http://localhost:6333",
     collection_name="genai-hestabit",
     embedding=embedding_model,
+    sparse_embedding=sparse_embedding,
+    vector_name="dense",
+    sparse_vector_name="sparse",
+    retrieval_mode=RetrievalMode.HYBRID
 )
 
 # take user  input
 
 user_query = input("Ask something:")
 
-search_results = vector_db.similarity_search(query=user_query, k=3)
+retriever = vector_db.as_retriever(
+    search_kwargs={
+        "k": 3,
+        
+    }
+)
+
+search_results =retriever.invoke(user_query)
 
 context ="\n\n\n".join([f"Page Content:{result.page_content}\nPage Number:{result.metadata['page_label']}\nFile Loaction:{result.metadata['source']}" for result in search_results])
 

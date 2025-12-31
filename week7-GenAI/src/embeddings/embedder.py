@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from langchain_google_genai import GoogleGenerativeAIEmbeddings
+from langchain_qdrant import FastEmbedSparse
 import os
 load_dotenv()
 
@@ -9,10 +10,5 @@ def get_embedding_model():
         model="models/text-embedding-004"
     )
 
-if __name__ == "__main__":
-    embedder = get_embedding_model()
-
-    # embedding the sample data 
-    vector = embedder.embed_query("This is a test sentence")
-    print("Vector length:", len(vector))
-    print("First 10 values:", vector[:10])
+def get_sparse_embedding_model():
+    return FastEmbedSparse(model_name="Qdrant/bm25")
