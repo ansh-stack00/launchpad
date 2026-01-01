@@ -2,7 +2,7 @@ from src.embeddings.embedder import get_embedding_model, get_sparse_embedding_mo
 from src.generator.llm_client import get_llm
 from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
-
+from src.utils.re_ranker import rerank
 
 load_dotenv()
 
@@ -24,7 +24,12 @@ vector_db = QdrantVectorStore.from_existing_collection(
 
 user_query = input("Ask something:")
 
-search_results = vector_db.similarity_search(query=user_query, k=3)
+initial_results = vector_db.similarity_search(query=user_query, k=10)
+# print("intital search",initial_results)
+
+# reranking the searched results
+search_results = rerank(query=user_query, docs=initial_results,top_k=3)
+# print("after reranking", search_results)
 
 context ="\n\n\n".join([f"Page Content:{result.page_content}\nPage Number:{result.metadata['page_label']}\nFile Loaction:{result.metadata['source']}" for result in search_results])
 
