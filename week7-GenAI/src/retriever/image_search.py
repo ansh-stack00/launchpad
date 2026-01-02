@@ -45,10 +45,7 @@ def text_to_image_search(query: str, k: int = 3, image_dir="src/data/image_dir")
 
 
 def image_to_image_search(image_path: str, k: int = 3, image_dir="src/data/image_dir"):
-    """
-    Search for images similar to a given image.
-    Returns a list of dictionaries with 'image' (PIL.Image), 'caption', 'ocr_text', and 'source'.
-    """
+    
     image = Image.open(image_path).convert("RGB")
 
     with torch.no_grad():
