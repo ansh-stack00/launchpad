@@ -39,15 +39,16 @@ def get_qdrant_client():
         client.create_collection(
             collection_name=COLLECTION_NAME,
             vectors_config={
-                "dense": VectorParams(
-                    size=768,
-                    distance=Distance.COSINE
-                )
+                "text_dense": VectorParams(size=768, distance=Distance.COSINE),
+                "image_dense": VectorParams(size=512, distance=Distance.COSINE)
             },
             sparse_vectors_config={
                 "sparse": SparseVectorParams()
             }
         )
-        print("Hybrid collection created")
+        print("Multimodal   collection created")
 
     return client
+if __name__=="__main__":
+    get_qdrant_client()
+
