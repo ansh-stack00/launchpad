@@ -29,4 +29,3 @@ def load_schema(db_path):
     print("schema loaded succesfully..")
     return schema
 
-load_schema("lms.db")
