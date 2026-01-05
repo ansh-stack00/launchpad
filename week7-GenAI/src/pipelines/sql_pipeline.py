@@ -22,6 +22,24 @@ def execute_sql(sql: str, db_path: str):
     return columns, rows
 
 
+# result summarizer llm
+
+def summarize_results(columns, rows) -> str:
+    prompt = f"""
+Summarize the SQL result.
+
+Columns:
+{columns}
+
+Rows:
+{rows}
+"""
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=[{"role": "user", "content": prompt}],
+        
+    )
+    return response.choices[0].message.content
 
 MAX_RETRIES=2
 
@@ -48,3 +66,10 @@ for attempt in range(MAX_RETRIES + 1):
 columns, rows = execute_sql(sql,"lms.db")
 
 print(rows)
+
+summary = summarize_results(columns , rows)
+print(summary)
+
+
+
+       
