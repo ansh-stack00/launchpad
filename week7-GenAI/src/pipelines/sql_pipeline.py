@@ -3,16 +3,12 @@ from src.utils.schema_loader import load_schema
 from src.generator.sql_generator import generate_sql,judge_sql
 import sqlite3
 
-client = get_llm()
-schema = load_schema("lms.db")
 
-user_question=input("Ask: ")
-client = get_llm()
 
 
 # execute sql 
 
-def execute_sql(sql: str, db_path: str):
+def execute_sql(sql, db_path):
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
     cursor.execute(sql)
@@ -24,7 +20,7 @@ def execute_sql(sql: str, db_path: str):
 
 # result summarizer llm
 
-def summarize_results(columns, rows) -> str:
+def summarize_results(client ,columns, rows):
     prompt = f"""
 Summarize the SQL result.
 
@@ -43,32 +39,40 @@ Rows:
 
 MAX_RETRIES=2
 
-sql = generate_sql(client, schema , user_question)
+def ask_sql(user_question , db_path="lms.db"):
+    client = get_llm()
+    schema = load_schema(db_path)
+    sql = generate_sql(client, schema , user_question)
 
-for attempt in range(MAX_RETRIES + 1):
-    judge_result = judge_sql(client, schema, user_question, sql)
-    if judge_result["verdict"] == "PASS":
-        print("SQL is correct:\n", sql)
-        break
+    for attempt in range(MAX_RETRIES + 1):
+        judge_result = judge_sql(client, schema, user_question, sql)
+        if judge_result["verdict"] == "PASS":
+            print("SQL is correct:\n", sql)
+            break
 
-    if attempt == MAX_RETRIES:
-        raise RuntimeError(f"SQL invalid after {MAX_RETRIES} retries:\n" + "\n".join(judge_result["issues"]))
-    
-    print(f"Fixing SQL (attempt {attempt+1})...")
-    sql = generate_sql(
-        client,
-        schema,
-        user_question,
-        previous_sql=sql,
-        issues=judge_result["issues"]
-    )
+        if attempt == MAX_RETRIES:
+            raise RuntimeError(f"SQL invalid after {MAX_RETRIES} retries:\n" + "\n".join(judge_result["issues"]))
+        
+        print(f"Fixing SQL (attempt {attempt+1})...")
+        sql = generate_sql(
+            client,
+            schema,
+            user_question,
+            previous_sql=sql,
+            issues=judge_result["issues"]
+        )
 
-columns, rows = execute_sql(sql,"lms.db")
+    columns, rows = execute_sql(sql,"lms.db")
 
-print(rows)
+    summary = summarize_results(client , columns , rows)
+    return {
+        "sql": sql,
+        "columns": columns,
+        "rows": rows,
+        "summary": summary
+    }
 
-summary = summarize_results(columns , rows)
-print(summary)
+
 
 
 
