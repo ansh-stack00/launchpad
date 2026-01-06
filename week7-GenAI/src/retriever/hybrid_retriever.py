@@ -4,12 +4,22 @@ from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
 from src.utils.re_ranker import rerank
 
+from src.memory.memory_store import (
+    init_memory,
+    add_user_message,
+    add_assistant_message,
+    get_memory
+)
+
 load_dotenv()
 
 embedding_model = get_embedding_model()
 sparse_embedding=get_sparse_embedding_model()
 
 client = get_llm()
+
+# initializing short term memory 
+init_memory(max_turns=5)
 
 
 
@@ -20,46 +30,56 @@ vector_db = QdrantVectorStore.from_existing_collection(
     sparse_embedding=sparse_embedding
 )
 
-# take user  input
+while True:
+    user_query = input("\nAsk something or (type exit): ")
 
-user_query = input("Ask something:")
+    if user_query.lower() == "exit":
+        break
 
-initial_results = vector_db.similarity_search(query=user_query, k=10)
-# print("intital search",initial_results)
+# adding user message into memory 
+    add_user_message(user_query)
 
-# reranking the searched results
-search_results = rerank(query=user_query, docs=initial_results,top_k=3)
-# print("after reranking", search_results)
+    initial_results = vector_db.similarity_search(query=user_query, k=10)
+    # print("intital search",initial_results)
 
-context ="\n\n\n".join([f"Page Content:{result.page_content}\nPage Number:{result.metadata['page_label']}\nFile Loaction:{result.metadata['source']}" for result in search_results])
+    # reranking the searched results
+    search_results = rerank(query=user_query, docs=initial_results,top_k=3)
+    # print("after reranking", search_results)
 
-SYSTEM_PROMPT = f"""
-You are  helpful AI Assistant who answers user query based on the available context
-retrieved from a PDF file along with page_contents and page number.
+    context ="\n\n\n".join([f"Page Content:{result.page_content}\nPage Number:{result.metadata['page_label']}\nFile Loaction:{result.metadata['source']}" for result in search_results])
 
-You should only answer the user based on the following context and navigate the user to 
-open the right page number to know more .
+    SYSTEM_PROMPT = f"""
+    You are  helpful AI Assistant who answers user query based on the available context
+    retrieved from a PDF file along with page_contents and page number.
 
-If user asks anything which is not in context . Just say sorry .
+    You should only answer the user based on the following context and navigate the user to 
+    open the right page number to know more .
 
-context:
-{context}
+    If user asks anything which is not in context . Just say sorry .
 
-"""
+    context:
+    {context}
 
+    """
 
-responses = client.chat.completions.create(
-    model="llama-3.3-70b-versatile",
     messages=[
-        {
-            "role":"system",
-            "content":SYSTEM_PROMPT
-        },
-        {
-            "role":"user",
-            "content":user_query
-        }
-    ]
-)
+            {
+                "role":"system",
+                "content":SYSTEM_PROMPT
+            }
+        ]
+    messages.extend(get_memory())
 
-print(f"🤖 {responses.choices[0].message.content}")
+
+    responses = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=messages
+        
+    )
+
+    assitant_res = responses.choices[0].message.content
+
+    print(f"🤖 {assitant_res}")
+
+    add_assistant_message(assitant_res)
+
