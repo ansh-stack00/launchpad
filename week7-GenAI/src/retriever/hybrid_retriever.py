@@ -3,6 +3,8 @@ from src.generator.llm_client import get_llm
 from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
 from src.utils.re_ranker import rerank
+from src.evaluation.hallucination_detector import detect_hallucination
+
 
 from src.memory.memory_store import (
     init_memory,
@@ -79,7 +81,18 @@ while True:
 
     assitant_res = responses.choices[0].message.content
 
-    print(f"🤖 {assitant_res}")
+    is_hallucinated, score = detect_hallucination(
+        answer=assitant_res,
+        context=context
+    )
+
+    if is_hallucinated:
+        print("\nPotential hallucination detected!")
+        print(f"Context Match Score: {score}")
+    else:
+        print(f"\nFaithful answer (score: {score})")
+
+    print(f"\n🤖 {assitant_res}")
 
     add_assistant_message(assitant_res)
 
