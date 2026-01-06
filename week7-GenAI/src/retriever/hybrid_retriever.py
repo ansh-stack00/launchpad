@@ -4,6 +4,9 @@ from dotenv import load_dotenv
 from langchain_qdrant import QdrantVectorStore
 from src.utils.re_ranker import rerank
 from src.evaluation.hallucination_detector import detect_hallucination
+from src.evaluation.self_refine import refine_answer
+from src.evaluation.human_feedback import log_human_feedback
+
 
 
 from src.memory.memory_store import (
@@ -32,12 +35,8 @@ vector_db = QdrantVectorStore.from_existing_collection(
     sparse_embedding=sparse_embedding
 )
 
-while True:
-    user_query = input("\nAsk something or (type exit): ")
-
-    if user_query.lower() == "exit":
-        break
-
+def ask_rag(user_query):
+    
 # adding user message into memory 
     add_user_message(user_query)
 
@@ -87,12 +86,30 @@ while True:
     )
 
     if is_hallucinated:
-        print("\nPotential hallucination detected!")
-        print(f"Context Match Score: {score}")
-    else:
-        print(f"\nFaithful answer (score: {score})")
+        print("\nRefining hallucinated answer...")
+        refined_answer = refine_answer(
+        llm=client,
+        query=user_query,
+        context=context,
+        previous_answer=assitant_res
+    )
 
-    print(f"\n🤖 {assitant_res}")
+    answer = assitant_res 
+    add_assistant_message(answer)
 
-    add_assistant_message(assitant_res)
+    # print({
+    #     "answer": answer,
+    #     "sources": search_results,
+    #     "hallucinated": is_hallucinated,
+    #     "score":score
+    # })
+
+
+    return {
+        "answer": answer,
+        "sources": search_results,
+        "hallucinated": is_hallucinated,
+        "score":score
+    }
+
 
