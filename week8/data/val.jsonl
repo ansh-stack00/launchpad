@@ -1,0 +1,4 @@
+{"instruction": "Evaluate the return on investment (ROI).", "input": "Initial investment: $200,000, Final value: $260,000.", "output": "ROI: 30%"}
+{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $200,000, Investing cash flow: -$50,000, Financing cash flow: $10,000.", "output": "Operating cash flow: $200,000"}
+{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $150,000, Investing cash flow: -$70,000, Financing cash flow: $5,000.", "output": "Operating cash flow: $150,000"}
+{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $300,000, Investing cash flow: -$100,000, Financing cash flow: $50,000.", "output": "Operating cash flow: $300,000"}
