@@ -1,4 +1,202 @@
-{"instruction": "Evaluate the return on investment (ROI).", "input": "Initial investment: $200,000, Final value: $260,000.", "output": "ROI: 30%"}
-{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $200,000, Investing cash flow: -$50,000, Financing cash flow: $10,000.", "output": "Operating cash flow: $200,000"}
-{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $150,000, Investing cash flow: -$70,000, Financing cash flow: $5,000.", "output": "Operating cash flow: $150,000"}
-{"instruction": "Extract the cash flow from operations.", "input": "Operating cash flow: $300,000, Investing cash flow: -$100,000, Financing cash flow: $50,000.", "output": "Operating cash flow: $300,000"}
+{"instruction": "Calculate sales commission.", "input": "Total sales: $790,000, Commission rate: 10%, Threshold: $100,000.", "output": "Commission earned: $79,000"}
+{"instruction": "Calculate sales commission.", "input": "Total sales: $800,000, Commission rate: 3%, Threshold: $0.", "output": "Commission earned: $24,000"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $100,000, Direct labor hours: 5,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $200,000, Direct labor hours: 10,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $300,000, Direct labor hours: 15,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $400,000, Direct labor hours: 20,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $500,000, Direct labor hours: 25,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $600,000, Direct labor hours: 30,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $700,000, Direct labor hours: 35,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $800,000, Direct labor hours: 40,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $900,000, Direct labor hours: 45,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,000,000, Direct labor hours: 50,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,100,000, Direct labor hours: 55,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,200,000, Direct labor hours: 60,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,300,000, Direct labor hours: 65,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,400,000, Direct labor hours: 70,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,500,000, Direct labor hours: 75,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,600,000, Direct labor hours: 80,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,700,000, Direct labor hours: 85,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,800,000, Direct labor hours: 90,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $1,900,000, Direct labor hours: 95,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,000,000, Direct labor hours: 100,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,100,000, Direct labor hours: 105,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,200,000, Direct labor hours: 110,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,300,000, Direct labor hours: 115,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,400,000, Direct labor hours: 120,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,500,000, Direct labor hours: 125,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,600,000, Direct labor hours: 130,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,700,000, Direct labor hours: 135,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,800,000, Direct labor hours: 140,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $2,900,000, Direct labor hours: 145,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,000,000, Direct labor hours: 150,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,100,000, Direct labor hours: 155,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,200,000, Direct labor hours: 160,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,300,000, Direct labor hours: 165,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,400,000, Direct labor hours: 170,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,500,000, Direct labor hours: 175,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,600,000, Direct labor hours: 180,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,700,000, Direct labor hours: 185,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,800,000, Direct labor hours: 190,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $3,900,000, Direct labor hours: 195,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,000,000, Direct labor hours: 200,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,100,000, Direct labor hours: 205,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,200,000, Direct labor hours: 210,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,300,000, Direct labor hours: 215,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,400,000, Direct labor hours: 220,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,500,000, Direct labor hours: 225,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,600,000, Direct labor hours: 230,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,700,000, Direct labor hours: 235,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,800,000, Direct labor hours: 240,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $4,900,000, Direct labor hours: 245,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,000,000, Direct labor hours: 250,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,100,000, Direct labor hours: 255,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,200,000, Direct labor hours: 260,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,300,000, Direct labor hours: 265,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,400,000, Direct labor hours: 270,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,500,000, Direct labor hours: 275,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,600,000, Direct labor hours: 280,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,700,000, Direct labor hours: 285,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,800,000, Direct labor hours: 290,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $5,900,000, Direct labor hours: 295,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Calculate overhead rate.", "input": "Total manufacturing overhead: $6,000,000, Direct labor hours: 300,000.", "output": "Overhead rate: $20.00 per labor hour"}
+{"instruction": "Convert currency.", "input": "Amount: 10,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 8,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 20,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 14,600.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 30,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 3,300,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 40,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 47,200.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 50,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 42,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 60,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 43,800.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 70,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 7,700,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 80,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 94,400.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 90,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 76,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 100,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 73,000.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 110,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 12,100,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 120,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 141,600.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 130,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 110,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 140,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 102,200.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 150,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 16,500,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 160,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 188,800.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 170,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 144,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 180,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 131,400.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 190,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 20,900,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 200,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 236,000.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 210,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 178,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 220,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 160,600.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 230,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 25,300,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 240,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 283,200.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 250,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 212,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 260,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 189,800.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 270,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 29,700,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 280,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 330,400.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 290,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 246,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 300,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 219,000.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 310,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 34,100,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 320,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 377,600.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 330,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 280,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 340,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 248,200.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 350,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 38,500,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 360,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 424,800.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 370,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 314,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 380,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 277,400.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 390,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 42,900,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 400,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 472,000.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 410,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 348,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 420,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 306,600.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 430,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 47,300,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 440,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 519,200.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 450,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 382,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 460,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 335,800.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 470,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 51,700,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 480,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 566,400.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 490,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 416,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 500,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 365,000.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 510,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 56,100,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 520,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 613,600.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 530,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 450,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 540,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 394,200.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 550,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 60,500,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 560,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 660,800.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 570,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 484,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 580,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 423,400.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 590,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 64,900,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 600,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 708,000.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 610,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 518,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 620,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 452,600.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 630,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 69,300,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 640,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 755,200.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 650,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 552,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 660,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 481,800.00 GBP"}
+{"instruction": "Convert currency.", "input": "Amount: 670,000 USD, Exchange rate: 110.0 USD/JPY.", "output": "Converted amount: 73,700,000.00 JPY"}
+{"instruction": "Convert currency.", "input": "Amount: 680,000 EUR, Exchange rate: 1.18 EUR/USD.", "output": "Converted amount: 802,400.00 USD"}
+{"instruction": "Convert currency.", "input": "Amount: 690,000 USD, Exchange rate: 0.85 USD/EUR.", "output": "Converted amount: 586,500.00 EUR"}
+{"instruction": "Convert currency.", "input": "Amount: 700,000 USD, Exchange rate: 0.73 USD/GBP.", "output": "Converted amount: 511,000.00 GBP"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $100,000, Dividend payout ratio: 30%.", "output": "Dividend payment: $30,000, Retained earnings: $70,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $200,000, Dividend payout ratio: 31%.", "output": "Dividend payment: $62,000, Retained earnings: $138,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $300,000, Dividend payout ratio: 32%.", "output": "Dividend payment: $96,000, Retained earnings: $204,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $400,000, Dividend payout ratio: 33%.", "output": "Dividend payment: $132,000, Retained earnings: $268,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $500,000, Dividend payout ratio: 34%.", "output": "Dividend payment: $170,000, Retained earnings: $330,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $600,000, Dividend payout ratio: 35%.", "output": "Dividend payment: $210,000, Retained earnings: $390,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $700,000, Dividend payout ratio: 36%.", "output": "Dividend payment: $252,000, Retained earnings: $448,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $800,000, Dividend payout ratio: 37%.", "output": "Dividend payment: $296,000, Retained earnings: $504,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $900,000, Dividend payout ratio: 38%.", "output": "Dividend payment: $342,000, Retained earnings: $558,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,000,000, Dividend payout ratio: 39%.", "output": "Dividend payment: $390,000, Retained earnings: $610,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,100,000, Dividend payout ratio: 40%.", "output": "Dividend payment: $440,000, Retained earnings: $660,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,200,000, Dividend payout ratio: 41%.", "output": "Dividend payment: $492,000, Retained earnings: $708,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,300,000, Dividend payout ratio: 42%.", "output": "Dividend payment: $546,000, Retained earnings: $754,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,400,000, Dividend payout ratio: 43%.", "output": "Dividend payment: $602,000, Retained earnings: $798,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,500,000, Dividend payout ratio: 44%.", "output": "Dividend payment: $660,000, Retained earnings: $840,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,600,000, Dividend payout ratio: 45%.", "output": "Dividend payment: $720,000, Retained earnings: $880,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,700,000, Dividend payout ratio: 46%.", "output": "Dividend payment: $782,000, Retained earnings: $918,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,800,000, Dividend payout ratio: 47%.", "output": "Dividend payment: $846,000, Retained earnings: $954,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $1,900,000, Dividend payout ratio: 48%.", "output": "Dividend payment: $912,000, Retained earnings: $988,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,000,000, Dividend payout ratio: 49%.", "output": "Dividend payment: $980,000, Retained earnings: $1,020,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,100,000, Dividend payout ratio: 50%.", "output": "Dividend payment: $1,050,000, Retained earnings: $1,050,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,200,000, Dividend payout ratio: 51%.", "output": "Dividend payment: $1,122,000, Retained earnings: $1,078,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,300,000, Dividend payout ratio: 52%.", "output": "Dividend payment: $1,196,000, Retained earnings: $1,104,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,400,000, Dividend payout ratio: 53%.", "output": "Dividend payment: $1,272,000, Retained earnings: $1,128,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,500,000, Dividend payout ratio: 54%.", "output": "Dividend payment: $1,350,000, Retained earnings: $1,150,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,600,000, Dividend payout ratio: 55%.", "output": "Dividend payment: $1,430,000, Retained earnings: $1,170,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,700,000, Dividend payout ratio: 56%.", "output": "Dividend payment: $1,512,000, Retained earnings: $1,188,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,800,000, Dividend payout ratio: 57%.", "output": "Dividend payment: $1,596,000, Retained earnings: $1,204,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $2,900,000, Dividend payout ratio: 58%.", "output": "Dividend payment: $1,682,000, Retained earnings: $1,218,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,000,000, Dividend payout ratio: 59%.", "output": "Dividend payment: $1,770,000, Retained earnings: $1,230,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,100,000, Dividend payout ratio: 30%.", "output": "Dividend payment: $930,000, Retained earnings: $2,170,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,200,000, Dividend payout ratio: 31%.", "output": "Dividend payment: $992,000, Retained earnings: $2,208,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,300,000, Dividend payout ratio: 32%.", "output": "Dividend payment: $1,056,000, Retained earnings: $2,244,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,400,000, Dividend payout ratio: 33%.", "output": "Dividend payment: $1,122,000, Retained earnings: $2,278,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,500,000, Dividend payout ratio: 34%.", "output": "Dividend payment: $1,190,000, Retained earnings: $2,310,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,600,000, Dividend payout ratio: 35%.", "output": "Dividend payment: $1,260,000, Retained earnings: $2,340,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,700,000, Dividend payout ratio: 36%.", "output": "Dividend payment: $1,332,000, Retained earnings: $2,368,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,800,000, Dividend payout ratio: 37%.", "output": "Dividend payment: $1,406,000, Retained earnings: $2,394,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $3,900,000, Dividend payout ratio: 38%.", "output": "Dividend payment: $1,482,000, Retained earnings: $2,418,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,000,000, Dividend payout ratio: 39%.", "output": "Dividend payment: $1,560,000, Retained earnings: $2,440,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,100,000, Dividend payout ratio: 40%.", "output": "Dividend payment: $1,640,000, Retained earnings: $2,460,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,200,000, Dividend payout ratio: 41%.", "output": "Dividend payment: $1,722,000, Retained earnings: $2,478,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,300,000, Dividend payout ratio: 42%.", "output": "Dividend payment: $1,806,000, Retained earnings: $2,494,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,400,000, Dividend payout ratio: 43%.", "output": "Dividend payment: $1,892,000, Retained earnings: $2,508,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,500,000, Dividend payout ratio: 44%.", "output": "Dividend payment: $1,980,000, Retained earnings: $2,520,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,600,000, Dividend payout ratio: 45%.", "output": "Dividend payment: $2,070,000, Retained earnings: $2,530,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,700,000, Dividend payout ratio: 46%.", "output": "Dividend payment: $2,162,000, Retained earnings: $2,538,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,800,000, Dividend payout ratio: 47%.", "output": "Dividend payment: $2,256,000, Retained earnings: $2,544,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $4,900,000, Dividend payout ratio: 48%.", "output": "Dividend payment: $2,352,000, Retained earnings: $2,548,000"}
+{"instruction": "Calculate dividend payout.", "input": "Net income: $5,000,000, Dividend payout ratio: 49%.", "output": "Dividend payment: $2,450,000, Retained earnings: $2,550,000"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 5%, Years to maturity: 10.", "output": "Annual coupon payment: $50.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 6%, Years to maturity: 11.", "output": "Annual coupon payment: $60.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 7%, Years to maturity: 12.", "output": "Annual coupon payment: $70.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 5%, Years to maturity: 13.", "output": "Annual coupon payment: $50.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 6%, Years to maturity: 14.", "output": "Annual coupon payment: $60.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 7%, Years to maturity: 15.", "output": "Annual coupon payment: $70.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 5%, Years to maturity: 16.", "output": "Annual coupon payment: $50.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 6%, Years to maturity: 17.", "output": "Annual coupon payment: $60.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 7%, Years to maturity: 18.", "output": "Annual coupon payment: $70.00"}
+{"instruction": "Calculate annual bond coupon payment.", "input": "Bond face value: $1000, Coupon rate: 5%, Years to maturity: 19.", "output": "Annual coupon payment: $50.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $5, Industry average P/E: 15.", "output": "Estimated stock price: $75.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $6, Industry average P/E: 16.", "output": "Estimated stock price: $96.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $7, Industry average P/E: 17.", "output": "Estimated stock price: $119.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $8, Industry average P/E: 18.", "output": "Estimated stock price: $144.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $9, Industry average P/E: 19.", "output": "Estimated stock price: $171.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $10, Industry average P/E: 20.", "output": "Estimated stock price: $200.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $11, Industry average P/E: 21.", "output": "Estimated stock price: $231.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $12, Industry average P/E: 22.", "output": "Estimated stock price: $264.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $13, Industry average P/E: 23.", "output": "Estimated stock price: $299.00"}
+{"instruction": "Estimate stock price using P/E ratio.", "input": "Earnings per share: $14, Industry average P/E: 24.", "output": "Estimated stock price: $336.00"}
