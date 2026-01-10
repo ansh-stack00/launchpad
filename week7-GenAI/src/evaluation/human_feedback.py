@@ -5,11 +5,11 @@ from pathlib import Path
 LOG_FILE = Path("./src/CHAT-LOGS.json")
 
 def log_human_feedback(
-    query,
-    answer,
-    context,
-    rating,
-    comment,
+    query: str,
+    answer: str,
+    context: str,
+    rating: int | None = None,
+    comment: str | None = None,
 ):
     log_entry = {
         "timestamp": datetime.utcnow().isoformat(),
@@ -20,7 +20,6 @@ def log_human_feedback(
         "comment": comment
     }
 
-    
     if not LOG_FILE.exists():
         LOG_FILE.write_text("[]")
 

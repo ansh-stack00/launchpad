@@ -1,0 +1,18 @@
+[
+  {
+    "timestamp": "2026-01-10T10:55:45.471375",
+    "query": "what is node.js",
+    "answer": "Sorry, the context does not provide any information about Node.js. To find relevant information, you may want to check a different source. The available context is related to geography and an annual report, and does not mention Node.js.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-10T10:56:54.591404",
+    "query": "explain how biogas formed ?",
+    "answer": "Biogas is formed through the decomposition of organic waste by bacteria in biogas digesters. The organic waste, such as dead plant and animal material, animal dung, and kitchen waste, is broken down by bacteria to produce biogas, which is essentially a mixture of methane and carbon dioxide. \n\nTo know more about biogas, please refer to page number 43 in the geography pdf file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  }
+]

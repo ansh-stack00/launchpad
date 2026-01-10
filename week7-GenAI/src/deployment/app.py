@@ -26,9 +26,11 @@ def ask_endpoint(data: AskRequest):
     result = ask_rag(data.question)
 
     log_human_feedback(
-        question=data.question,
+        query=data.question,
         answer=result["answer"],
-        hallucinated=result["hallucinated"]
+        context=result.get("context", ""),
+        rating=None,
+        comment=None
     )
 
     return {
