@@ -28,10 +28,10 @@ services:
     depends_on:
       - backend
     ports:
-      - "8080:80"      # Map frontend container port 80 to host 8080
+      - "3000:3000"     
     restart: always
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080"]
+      test: ["CMD", "curl", "-f", "http://localhost:3000"]
       interval: 30s
       retries: 3
       start_period: 10s
@@ -55,25 +55,16 @@ services:
       - app-network
 
   reverse-proxy:
-    image: jwilder/nginx-proxy
+    build: ./nginx
+    depends_on:
+      - frontend
     ports:
-      - "80:80"       # Only the reverse-proxy binds to host port 80
-      - "443:443"     # HTTPS
+      - "80:80"       
+      - "443:443"     
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-    networks:
-      - app-network
-
-  nginx-letsencrypt:
-    image: jrcs/letsencrypt-nginx-proxy-companion
-    environment:
-      NGINX_PROXY_CONTAINER: reverse-proxy
-      NGINX_HOST: ${NGINX_HOST}
-      NGINX_EMAIL: ${NGINX_EMAIL}
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock:ro
-    depends_on:
-      - reverse-proxy
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf
+      - ./nginx/ssl:/etc/nginx/ssl
     networks:
       - app-network
 
