@@ -43,7 +43,7 @@ y.to_csv("src/data/processed/y.csv", index=False)
 
 
 feature_list = X.columns.tolist()
-with open("src/data/features/feature_list.json", "w") as f:
+with open("/home/anshagrawal/Desktop/launchpad/week6/src/features/feature_list.json", "w") as f:
     json.dump(feature_list, f)
 
 with open("src/data/processed/scaler.pkl", "wb") as f:

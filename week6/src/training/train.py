@@ -3,12 +3,13 @@ import json
 import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 from pathlib import Path
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 from xgboost import XGBClassifier
-from sklearn.model_selection import StratifiedKFold, cross_val_score
+from sklearn.model_selection import StratifiedKFold, cross_val_score, train_test_split
 from sklearn.metrics import (
     accuracy_score,
     precision_score,
@@ -27,12 +28,19 @@ EVAL_DIR = PROJECT_ROOT / "src" / "evaluation"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 EVAL_DIR.mkdir(parents=True, exist_ok=True)
 
-X_train = np.load(PROCESSED_DIR / "X_train.npy")
-X_test = np.load(PROCESSED_DIR / "X_test.npy")
-y_train = np.load(PROCESSED_DIR / "y_train.npy")
-y_test = np.load(PROCESSED_DIR / "y_test.npy")
+X = pd.read_csv(PROCESSED_DIR / "X_features.csv")
+y = pd.read_csv(PROCESSED_DIR / "y.csv").values.ravel()
+X = X.select_dtypes(include=[np.number])
+X_train, X_test, y_train, y_test = train_test_split(
+    X.values,
+    y,
+    test_size=0.2,
+    stratify=y,
+    random_state=42
+)
 
 print("Data loaded successfully")
+
 
 models = {
     "Logistic Regression": LogisticRegression(
