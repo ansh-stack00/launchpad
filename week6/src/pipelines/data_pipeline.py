@@ -2,8 +2,8 @@ import pandas as pd
 import numpy as np
 import os
 
-SRC_FILE_PATH = os.path.join(os.getcwd(), '../data/raw/train.csv')
-DEST_FILE_PATH = os.path.join(os.getcwd(), '../data/processed/final.csv')
+SRC_FILE_PATH = os.path.join(os.getcwd(), 'src/data/raw/train.csv')
+DEST_FILE_PATH = os.path.join(os.getcwd(), 'src/data/processed/final.csv')
 
 # loading the dataset 
 
@@ -16,22 +16,35 @@ def load_data():
 def clean_data(data):
     # Handling missing values for numeric columns
     numeric_cols = data.select_dtypes(include=[np.number]).columns
-    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].mean())
+    data[numeric_cols] = data[numeric_cols].fillna(data[numeric_cols].median())
 
-    # Handling missing values for categorical columns (fill with mode)
+    # Handling missing values for categorical columns 
     categorical_cols = data.select_dtypes(include=['object']).columns
     for col in categorical_cols:
+        
         data[col] = data[col].fillna(data[col].mode()[0])
+        # print(data[col])
 
     # Handling duplicates
     data = data.drop_duplicates()
 
-    # Handling outliers using Z-score (numeric columns only)
-    from scipy import stats
-    z_scores = np.abs(stats.zscore(data.select_dtypes(include=[np.number])))
-    data = data[(z_scores < 3).all(axis=1)]
+    
+    def remove_outliers_iqr(data, cols):
+        for col in cols:
+            Q1 = data[col].quantile(0.25)
+            Q3 = data[col].quantile(0.75)
+            IQR = Q3 - Q1
 
+            lower_bound = Q1 - 1.5 * IQR
+            upper_bound = Q3 + 1.5 * IQR
+
+            data = data[(data[col] >= lower_bound) & (data[col] <= upper_bound)]
+        return data
+    
+    data = remove_outliers_iqr(data, ['Age', 'Fare'])
     return data
+
+
 
 # saving the cleaned data 
 

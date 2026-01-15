@@ -1,1 +1,21 @@
 {}
+{'mean_diff': feature1    1.5
+feature2    2.5
+dtype: float64, 'std_diff': feature1   NaN
+feature2   NaN
+dtype: float64}
+{'mean_diff': feature1    0.5
+feature2    2.5
+dtype: float64, 'std_diff': feature1   NaN
+feature2   NaN
+dtype: float64}
+{'mean_diff': feature1    0.5
+feature2    1.5
+dtype: float64, 'std_diff': feature1   NaN
+feature2   NaN
+dtype: float64}
+{'mean_diff': feature1    0.5
+feature2    0.5
+dtype: float64, 'std_diff': feature1   NaN
+feature2   NaN
+dtype: float64}

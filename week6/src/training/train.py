@@ -43,14 +43,11 @@ print("Data loaded successfully")
 models = {
     "Logistic Regression": LogisticRegression(
         max_iter=1000,
-        class_weight="balanced",
-        random_state=42
     ),
 
     "Random Forest": RandomForestClassifier(
         n_estimators=200,
         max_depth=10,
-        class_weight="balanced",
         random_state=42
     ),
 
@@ -59,7 +56,6 @@ models = {
         learning_rate=0.05,
         max_depth=5,
         eval_metric="logloss",
-        random_state=42
     ),
 
     "Neural Network": MLPClassifier(

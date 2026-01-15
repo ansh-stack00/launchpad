@@ -1,45 +1,17 @@
-import pandas as pd 
-import numpy as np 
-import json 
-import os
+import pandas as pd
+import numpy as np
+from sklearn.preprocessing import StandardScaler
+import json
+import pickle
 
-from sklearn.model_selection import train_test_split
-from sklearn.preprocessing import StandardScaler, OneHotEncoder
-from sklearn.compose import ColumnTransformer
-from sklearn.pipeline import Pipeline
+df = pd.read_csv("src/data/processed/final.csv")
 
-from pathlib import Path
-
-
-PROJECT_ROOT = Path(__file__).resolve().parents[2]
-FEATURES_DIR = PROJECT_ROOT / "src" / "features"
-PROCESSED_DIR = PROJECT_ROOT / "src" / "data" / "processed"
-
-# loading cleaned dataset 
-
-DATA_PATH=os.path.join(os.getcwd(),PROCESSED_DIR/'final.csv')
-TARGET="Survived"
-
-df=pd.read_csv(DATA_PATH)
-print("Data loaded ",df.shape)
-
-
-# doing feature engineering
-
-# 1. family size 
 df["FamilySize"] = df["SibSp"] + df["Parch"] + 1
-
-# 2.Is passenger alone?
 df["IsAlone"] = (df["FamilySize"] == 1).astype(int)
 
-
-# 3.Fare per person
 df["FarePerPerson"] = df["Fare"] / df["FamilySize"]
-
-# 4.Log Fare 
 df["LogFare"] = np.log1p(df["Fare"])
 
-# 5.Age groups
 df["AgeGroup"] = pd.cut(
     df["Age"],
     bins=[0, 12, 18, 60, 100],
@@ -47,77 +19,35 @@ df["AgeGroup"] = pd.cut(
 )
 
 
-# Extract title from Name
 df["Title"] = df["Name"].str.extract(r" ([A-Za-z]+)\.", expand=False)
+df["Title"] = df["Title"].replace(["Dr", "Rev", "Col", "Major", "Capt", "Jonkheer", "Sir", "Lady", "Countess", "Don"], "Rare")
 
-# Group rare titles
-df["Title"] = df["Title"].replace(
-    ["Lady", "Countess", "Capt", "Col", "Don", "Dr",
-     "Major", "Rev", "Sir", "Jonkheer", "Dona"],
-    "Rare"
-)
-df["Title"] = df["Title"].replace({"Mlle": "Miss", "Ms": "Miss", "Mme": "Mrs"})
+df["Age*Class"] = df["Age"] * df["Pclass"]
+df["Fare*Class"] = df["Fare"] * df["Pclass"]
 
-print("Feature engineering completed")
+X = df.drop("Survived", axis=1)
+y = df["Survived"]
 
 
-X = df.drop(columns=[TARGET])
-y = df[TARGET]
-
-numerical_features = [
-    "Age", "Fare", "SibSp", "Parch",
-    "FamilySize", "FarePerPerson", "LogFare"
-]
-
-categorical_features = [
-    "Sex", "Embarked", "Pclass", "Title", "AgeGroup"
-]
+categorical_cols = ["Sex", "Embarked", "Title", "AgeGroup", "Pclass"]
+X = pd.get_dummies(X, columns=categorical_cols, drop_first=False)  
 
 
-numeric_pipeline = Pipeline(steps=[
-    ("scaler", StandardScaler())
-])
-
-categorical_pipeline = Pipeline(steps=[
-    ("onehot", OneHotEncoder(handle_unknown="ignore", sparse_output=False))
-])
-
-preprocessor = ColumnTransformer(
-    transformers=[
-        ("num", numeric_pipeline, numerical_features),
-        ("cat", categorical_pipeline, categorical_features)
-    ]
-)
-
-X_train, X_test, y_train, y_test = train_test_split(
-    X,
-    y,
-    test_size=0.2,
-    random_state=42,
-    stratify=y
-)
-
-X_train_processed = preprocessor.fit_transform(X_train)
-X_test_processed = preprocessor.transform(X_test)
+num_cols = ["Age", "Fare", "FamilySize", "FarePerPerson", "LogFare", "Age*Class", "Fare*Class"]
+scaler = StandardScaler()
+X[num_cols] = scaler.fit_transform(X[num_cols])
 
 
-feature_names = (
-    numerical_features +
-    list(
-        preprocessor
-        .named_transformers_["cat"]
-        .named_steps["onehot"]
-        .get_feature_names_out(categorical_features)
-    )
-)
+X.to_csv("src/data/processed/X_features.csv", index=False)
+y.to_csv("src/data/processed/y.csv", index=False)
 
-with open(FEATURES_DIR / "feature_list.json", "w") as f:
-    json.dump(feature_names, f, indent=4)
 
-np.save(PROCESSED_DIR/"X_train.npy", X_train_processed)
-np.save(PROCESSED_DIR/"X_test.npy", X_test_processed)
-np.save(PROCESSED_DIR/"y_train.npy", y_train)
-np.save(PROCESSED_DIR/"y_test.npy", y_test)
+feature_list = X.columns.tolist()
+with open("src/data/features/feature_list.json", "w") as f:
+    json.dump(feature_list, f)
 
-print("Processed Titanic features saved successfully")
+with open("src/data/processed/scaler.pkl", "wb") as f:
+    pickle.dump(scaler, f)
 
+print("eature engineering completed")
+print(f"Number of features: {len(feature_list)}")

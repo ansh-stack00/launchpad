@@ -20,7 +20,7 @@ MODEL_PATH = "./models/model.pkl"
 model = joblib.load(MODEL_PATH)
 
 # Initialize DriftChecker
-drift_checker = DriftChecker(model_path=MODEL_PATH, baseline_data_path='../deployment/baseline_data.csv')  
+drift_checker = DriftChecker(model_path=MODEL_PATH, baseline_data_path='./deployment/baseline_data.csv')  
 
 # Define the input schema using Pydantic
 class PredictionRequest(BaseModel):
