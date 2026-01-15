@@ -4,14 +4,10 @@ import pickle
 import matplotlib.pyplot as plt
 import seaborn as sns
 from pathlib import Path
-
-# importing ml models 
 from sklearn.linear_model import LogisticRegression
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.neural_network import MLPClassifier
 from xgboost import XGBClassifier
-
-# selecting models
 from sklearn.model_selection import StratifiedKFold, cross_val_score
 from sklearn.metrics import (
     accuracy_score,
@@ -21,7 +17,7 @@ from sklearn.metrics import (
     roc_auc_score,
     confusion_matrix
 )
-# path setup 
+
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 PROCESSED_DIR = PROJECT_ROOT / "src" / "data" / "processed"
@@ -31,7 +27,6 @@ EVAL_DIR = PROJECT_ROOT / "src" / "evaluation"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
 EVAL_DIR.mkdir(parents=True, exist_ok=True)
 
-# loading data 
 X_train = np.load(PROCESSED_DIR / "X_train.npy")
 X_test = np.load(PROCESSED_DIR / "X_test.npy")
 y_train = np.load(PROCESSED_DIR / "y_train.npy")
@@ -39,7 +34,6 @@ y_test = np.load(PROCESSED_DIR / "y_test.npy")
 
 print("Data loaded successfully")
 
-# defining models 
 models = {
     "Logistic Regression": LogisticRegression(
         max_iter=1000,
@@ -72,7 +66,6 @@ results = {}
 for model_name, model in models.items():
     print(f"\n🔹 Training {model_name}")
 
-    # Cross-validation accuracy
     cv_scores = cross_val_score(
         model,
         X_train,
@@ -80,23 +73,18 @@ for model_name, model in models.items():
         cv=cv,
         scoring="accuracy"
     )
-
     print(f"CV Accuracy: {cv_scores.mean():.4f}")
 
     # Train model on full training data
     model.fit(X_train, y_train)
-
-    # Predictions
     y_pred = model.predict(X_test)
 
-    # Probabilities (needed for ROC-AUC)
     if hasattr(model, "predict_proba"):
         y_proba = model.predict_proba(X_test)[:, 1]
         roc_auc = roc_auc_score(y_test, y_proba)
     else:
         roc_auc = None
 
-    # Metrics
     results[model_name] = {
         "CV_Accuracy": cv_scores.mean(),
         "Accuracy": accuracy_score(y_test, y_pred),
@@ -106,8 +94,8 @@ for model_name, model in models.items():
         "ROC_AUC": roc_auc
     }
 
-# selecting best models on the basis of f1 score 
-best_model_name = max(results, key=lambda x: results[x]["F1_Score"])
+# selecting best models on the basis of ROC_AUC
+best_model_name = max(results, key=lambda x: results[x]["ROC_AUC"])
 best_model = models[best_model_name]
 
 print(f"\nBest Model: {best_model_name}")
