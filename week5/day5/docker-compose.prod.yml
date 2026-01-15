@@ -7,7 +7,7 @@ services:
     volumes:
       - ./server:/app
     ports:
-      - "5000:5000"   # Backend exposed on host port 5000
+      - "5000:5000"   #
     restart: always
     healthcheck:
       test: ["CMD", "curl", "-f", "http://localhost:5000"]
