@@ -12,5 +12,6 @@ RUN npm install
 # copying src code 
 COPY src ./src 
 
+EXPOSE 8080 
 # Run dev script 
 CMD ["npm" , "run" , "dev"]
