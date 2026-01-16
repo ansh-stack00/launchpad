@@ -56,6 +56,8 @@ def ask_rag(user_query):
     You should only answer the user based on the following context and navigate the user to 
     open the right page number to know more .
 
+    Always convert the context to bullet point and answer to user query in bullet points only 
+
     If user asks anything which is not in context . Just say sorry .
 
     context:

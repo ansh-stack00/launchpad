@@ -14,5 +14,85 @@
     "context": "",
     "rating": null,
     "comment": null
+  },
+  {
+    "timestamp": "2026-01-14T11:09:14.529823",
+    "query": "explaine me the coal mining process .",
+    "answer": "The coal mining process is mentioned in the context. According to the context, minerals that lie near the surface are simply dug out, and for deeper deposits, deep bores called shafts have to be made. \n\nTo know more about coal mining, you can refer to Page Number 32 of the pdf file located at src/data/raw/geapgraphy.pdf. Additionally, you can also check Page Number 37 for more information about coal, including the coal-producing areas of India.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-14T11:09:48.515038",
+    "query": "i want to know how the coal mined ?",
+    "answer": "The process of mining coal is mentioned on Page Number 32 of the pdf file. According to the context, coal mining involves removing the surface layer, known as open-cast mining, for shallow deposits. For deeper deposits, deep bores called shafts have to be made, which is called shaft mining.\n\nYou can refer to Page Number 32 for more details on the coal mining process, including figures (Fig 3.3 and Fig 3.4) that illustrate the mining and drilling processes.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-14T11:12:50.962679",
+    "query": "what is fig 2.12 shows ?",
+    "answer": "According to the context, Fig 2.12 shows a Blue Kingfisher. You can find this figure on Page Number 25 of the pdf file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:36:21.806085",
+    "query": "explian how petrol formed ?",
+    "answer": "According to the context, it is mentioned that petrol comes from a thick black liquid called Petroleum. It is found between the layers of rocks and is drilled from oil fields located in off-shore and coastal areas. \n\nTo know more about how petrol is formed, you can refer to page number 29 of the geography PDF file located at src/data/raw/geapgraphy.pdf. However, the exact formation process of petrol is not explained in the given context. \n\nYou can also check page number 38 of the same file for more information on petroleum and its related topics.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:36:48.512427",
+    "query": "explian how petrol formed ? and please provide me answer only in bullet points ",
+    "answer": "* Petrol comes from a thick black liquid called Petroleum\n* It is found between the layers of rocks \n* Drilled from oil fields located in off-shore and coastal areas \n* For more information, refer to page number 29 and 38 of the geography PDF file \n* Exact formation process of petrol is not explained in the given context",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:37:05.775435",
+    "query": "explian how petrol formed ?",
+    "answer": "The exact formation process of petrol is not explained in the given context. However, it is mentioned that petrol comes from a thick black liquid called Petroleum, which is found between the layers of rocks and is drilled from oil fields located in off-shore and coastal areas. \n\nTo know more about how petrol is formed, you can refer to page number 29 and 38 of the geography PDF file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:38:52.841580",
+    "query": "explian how petrol formed ?",
+    "answer": "* Petrol began as a thick black liquid called Petroleum.\n* It is found between the layers of rocks and is drilled from oil fields located in off-shore and coastal areas.\n* To know more about how petrol is formed, please refer to page 29 and 38 of the pdf file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:39:38.677759",
+    "query": "explian how petrol formed ? give me answer in paragraph format not in bullet point",
+    "answer": "Petrol began as a thick black liquid called Petroleum. It is found between the layers of rocks and is drilled from oil fields located in off-shore and coastal areas. However, the exact process of its formation is not mentioned in the given context. To know more about how petrol is formed, please refer to page 29 and 38 of the pdf file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-15T12:39:52.782706",
+    "query": "explian how petrol formed ? ",
+    "answer": "* Petrol began as a thick black liquid called Petroleum.\n* It is found between the layers of rocks and is drilled from oil fields located in off-shore and coastal areas.\n* The exact process of its formation is not mentioned in the given context.\n* To know more, please refer to page 29 and 38 of the pdf file located at src/data/raw/geapgraphy.pdf.",
+    "context": "",
+    "rating": null,
+    "comment": null
+  },
+  {
+    "timestamp": "2026-01-16T12:47:24.987529",
+    "query": "what is petroleum ",
+    "answer": "* Petroleum is a thick black liquid \n* It is found between the layers of rocks and is drilled from oil fields \n* It is then sent to refineries which process the crude oil and produce a variety of products \n* Petroleum and its derivatives are called Black Gold as they are very valuable \n* The word petroleum is derived from Latin words \u2013 Petra meaning rock, oleum meaning oil, so petroleum means rock oil \n* To know more, please refer to page number 38 in the geography pdf file.",
+    "context": "",
+    "rating": null,
+    "comment": null
   }
 ]
