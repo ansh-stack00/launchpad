@@ -4,7 +4,8 @@ import numpy as np
 import pandas as pd
 from pathlib import Path
 from sklearn.model_selection import GridSearchCV
-from sklearn.ensemble import RandomForestClassifier
+# from sklearn.ensemble import RandomForestClassifier
+from xgboost import XGBClassifier
 from sklearn.metrics import roc_auc_score
 
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
@@ -31,13 +32,17 @@ def grid_search_tuning():
     )
 
     param_grid = {
-        "n_estimators": [50, 100, 150],
-        "max_depth": [10, 20, 30],
-        "min_samples_split": [2, 5, 10],
-        "min_samples_leaf": [1, 2, 4]
+    "n_estimators": [50, 100, 150],
+    "max_depth": [3, 5, 7],
+    "min_child_weight": [1, 3, 5],
+    "gamma": [0, 0.1, 0.3]
     }
 
-    model = RandomForestClassifier(random_state=42)
+    model = XGBClassifier(
+        learning_rate=0.05,
+        max_depth=5,
+        eval_metric="logloss",
+    )
 
     grid_search = GridSearchCV(
         estimator=model,
@@ -51,6 +56,7 @@ def grid_search_tuning():
     grid_search.fit(X_train, y_train)
 
     best_model = grid_search.best_estimator_
+    # print(best_model)
 
     y_proba = best_model.predict_proba(X_test)[:, 1]
     roc_auc = roc_auc_score(y_test, y_proba)

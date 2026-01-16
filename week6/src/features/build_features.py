@@ -36,6 +36,7 @@ X = pd.get_dummies(X, columns=categorical_cols, drop_first=False)
 num_cols = ["Age", "Fare", "FamilySize", "FarePerPerson", "LogFare", "Age*Class", "Fare*Class"]
 scaler = StandardScaler()
 X[num_cols] = scaler.fit_transform(X[num_cols])
+# print("hello",X[num_cols].describe())
 
 
 X.to_csv("src/data/processed/X_features.csv", index=False)

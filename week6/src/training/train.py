@@ -79,11 +79,10 @@ for model_name, model in models.items():
         X_train,
         y_train,
         cv=cv,
-        scoring="accuracy"
+        scoring="roc_auc"
     )
-    print(f"CV Accuracy: {cv_scores.mean():.4f}")
+    # print(f"CV Accuracy: {cv_scores.mean():.4f}")
 
-    # Train model on full training data
     model.fit(X_train, y_train)
     y_pred = model.predict(X_test)
 
