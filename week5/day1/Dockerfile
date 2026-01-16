@@ -13,5 +13,5 @@ RUN npm install
 COPY src ./src 
 
 EXPOSE 8080 
-# Run dev script 
-CMD ["npm" , "run" , "dev"]
+# Run  script 
+CMD ["npm" , "run","start"]
