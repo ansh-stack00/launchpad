@@ -1,0 +1,12 @@
+[
+    "Pclass",
+    "Sex",
+    "Parch",
+    "Fare",
+    "FamilySize",
+    "IsAlone",
+    "FarePerPerson",
+    "Title_Miss",
+    "Title_Mr",
+    "Title_Mrs"
+]
