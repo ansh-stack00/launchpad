@@ -1,12 +1,11 @@
 [
-    "Pclass",
     "Sex",
+    "Age",
     "Parch",
     "Fare",
-    "FamilySize",
     "IsAlone",
     "FarePerPerson",
-    "Title_Miss",
+    "Title_Dr",
     "Title_Mr",
     "Title_Mrs"
 ]

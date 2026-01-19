@@ -2,10 +2,16 @@ import pandas as pd
 import numpy as np
 from sklearn.feature_selection import mutual_info_classif
 import json
-from src.features.build_features import build_feature
+from pathlib import Path
+
+OUTPUT_DIR=Path("src/data/processed")
+
 
 def select_features():
-    X_train, X_test, y_train, y_test = build_feature()
+    X_train=pd.read_csv("src/data/processed/X_train.csv")
+    X_test=pd.read_csv("src/data/processed/X_test.csv")
+    y_train=pd.read_csv("src/data/processed/y_train.csv")
+    y_test=pd.read_csv("src/data/processed/y_test.csv")
 
     corr = X_train.corr().abs()
     upper = corr.where(np.triu(np.ones(corr.shape), k=1).astype(bool))
@@ -23,7 +29,11 @@ def select_features():
     with open("src/features/feature_list.json", "w") as f:
         json.dump(selected_features, f, indent=4)
 
-    return X_train, X_test, y_train, y_test
+    X_train.to_csv(OUTPUT_DIR / "X_train.csv", index=False)
+    X_test.to_csv(OUTPUT_DIR / "X_test.csv", index=False)
+    y_train.to_csv(OUTPUT_DIR / "y_train.csv", index=False)
+    y_test.to_csv(OUTPUT_DIR / "y_test.csv", index=False)
+    
 
 if __name__ == "__main__":
     select_features()

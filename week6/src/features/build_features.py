@@ -5,6 +5,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import StandardScaler
 
 DATA_PATH = Path("src/data/processed/final.csv")
+OUTPUT_DIR=Path("src/data/processed")
+
 
 
 def extract_title(name):
@@ -51,7 +53,13 @@ def build_feature():
         df, y, test_size=0.2, random_state=42, stratify=y
     )
 
-    return X_train, X_test, y_train, y_test
+    
+    X_train.to_csv(OUTPUT_DIR / "X_train.csv", index=False)
+    X_test.to_csv(OUTPUT_DIR / "X_test.csv", index=False)
+    y_train.to_csv(OUTPUT_DIR / "y_train.csv", index=False)
+    y_test.to_csv(OUTPUT_DIR / "y_test.csv", index=False)
+
+    print("Saved: X_train.csv, X_test.csv, y_train.csv, y_test.csv")
 
 
 if __name__ == "__main__":
