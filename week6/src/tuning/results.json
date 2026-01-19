@@ -1,0 +1,10 @@
+{
+    "best_params": {
+        "max_depth": 8,
+        "min_samples_leaf": 2,
+        "min_samples_split": 2,
+        "n_estimators": 100
+    },
+    "cv_best_roc_auc": 0.8455587694853623,
+    "test_roc_auc": 0.854275173611111
+}
