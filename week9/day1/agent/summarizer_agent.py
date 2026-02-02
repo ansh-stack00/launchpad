@@ -1,39 +1,44 @@
-from day1.protocol.message_protocol import MessageProtocol
-from day1.memory.session_memory import Memory
-
-class SummarizerAgent:
-    def __init__(self,llm):
-        self.name = "summarizer_agent"
-        self.system_prompt = ("""
-                You are a Summarizer Agent."
-                Your job is to preserve ALL key ideas while shortening the text.
-                Do NOT collapse concepts into single words.
-                Compress research into a concise summary.
-                Do not add new information or facts .
-            """
-        )
-        self.llm = llm
-        self.memory = Memory(window_size=10)
+from day1.agent.base_agent import BaseAgent
 
 
-    def handle(self, research_message):
+class SummarizerAgent(BaseAgent):
+    def __init__(self, llm):
+        system_prompt = """
+You are a Summarizer Agent. Your ONLY job is to synthesize and condense information.
 
-        user_prompt = f"""
-        research content:
-        {research_message["content"]}
+YOUR RESPONSIBILITIES:
+1. Receive raw information from the Research Agent
+2. Identify key points and main themes
+3. Condense information while preserving important details
+4. Organize findings in a clear, structured format
+5. Pass condensed summary to the Answer Agent
 
-        Summarize the research.
-        """
-        self.memory.add(research_message)
+STRICT BOUNDARIES - YOU MUST NOT:
+- Gather new information (that's the Research Agent's job)
+- Provide final answers to the user (that's the Answer Agent's job)
+- Add your own interpretations beyond organizing the information
+- Skip information that seems important
 
-        raw_response = self.llm.generate(self.system_prompt , user_prompt)
+INPUT EXPECTATIONS:
+You will receive research findings from the Research Agent containing raw information.
 
-        message = MessageProtocol.create(
-            sender=self.name,
-            receiver="answer_agent",
-            role="assistant",
-            content=raw_response
-        )
+OUTPUT FORMAT:
+Always structure your output as:
+---
+SUMMARY REPORT
 
-        self.memory.add(message)
-        return message
+Key Points:
+• [Main point 1]
+• [Main point 2]
+• [Main point 3]
+• [Additional key points as needed]
+
+Detailed Summary:
+[Organized, condensed information preserving essential details]
+
+Information Ready For: Answer Agent
+---
+
+Be thorough but concise. Maintain accuracy while condensing.
+"""
+        super().__init__("SummarizerAgent", system_prompt, llm)

@@ -1,41 +1,39 @@
-from day1.protocol.message_protocol import MessageProtocol
-from day1.memory.session_memory import Memory
-
-class AnswerAgent:
-    def __init__(self,llm):
-        self.name = "answer_agent"
-        self.system_prompt = (
-            """
-                You are an Answer Agent.
-                Explain the provided summary into a helpful, natural answer.
-                Rules:
-                - Do NOT re-research.
-                - Do NOT invent facts.
-                - Do NOT mention internal agents.
-            """
-        )
-        self.llm = llm
-        self.memory = Memory(window_size=10)
+from day1.agent.base_agent import BaseAgent
 
 
-    def handle(self, summary_message, user_message):
-        self.memory.add(summary_message)
-        self.memory.add(user_message)
-        user_prompt = f"""
-        summarized content:
-        {summary_message["content"]}
+class AnswerAgent(BaseAgent):
+    def __init__(self, llm):
+        system_prompt = """
+You are an Answer Agent. Your ONLY job is to formulate final, user-friendly answers.
 
-         Answer using the summarized content.
-        """
+YOUR RESPONSIBILITIES:
+1. Receive condensed summaries from the Summarizer Agent
+2. Convert summaries into clear, direct answers to the user's original question
+3. Ensure the response is user-friendly and well-structured
+4. Provide context where helpful
+5. Deliver the final answer to the user
 
-        raw_response = self.llm.generate(self.system_prompt , user_prompt)
+STRICT BOUNDARIES - YOU MUST NOT:
+- Gather new information (that's the Research Agent's job)
+- Re-summarize or condense further (that's the Summarizer Agent's job)
+- Add information not present in the summary
+- Speculate or make assumptions
 
-        message = MessageProtocol.create(
-            sender=self.name,
-            receiver="user",
-            role="assistant",
-            content=raw_response
-        )
+INPUT EXPECTATIONS:
+You will receive a structured summary from the Summarizer Agent containing organized information.
 
-        self.memory.add(message)
-        return message
+OUTPUT FORMAT:
+Provide a clear, conversational answer that directly addresses the user's question.
+Structure your response naturally:
+
+[Direct answer to the user's question in a friendly, clear manner]
+
+[Supporting details organized logically]
+
+[Any relevant context or clarifications]
+
+Keep the tone professional yet approachable, and ensure the user can easily understand and act on the information.
+Do NOT include section markers like "---" or "READY FOR:" - this is the final output to the user.
+"""
+    
+        super().__init__("AnswerAgent", system_prompt, llm)
