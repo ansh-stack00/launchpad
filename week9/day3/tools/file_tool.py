@@ -4,217 +4,156 @@ import os
 import sqlite3
 import pandas as pd
 from typing import List, Dict, Any
+from pathlib import Path
+
+
+
+BASE_DIR = Path(__file__).resolve().parent.parent
 
 def inspect_csv(file_path: str) -> dict:
-    if not os.path.exists(file_path):
-        return {"error": f"File not found: {file_path}"}
 
-    if not file_path.lower().endswith(".csv"):
-        return {"error": "Only .csv files are supported."}
+    full_path = BASE_DIR / file_path
 
-    with open(file_path, "r", encoding="utf-8", errors="ignore") as f:
+    if not full_path.exists():
+        return {"error": f"File not found: {full_path}"}
+
+    with open(full_path, "r", encoding="utf-8", errors="ignore") as f:
         reader = csv.reader(f)
         headers = next(reader, [])
         row_count = sum(1 for _ in reader)
 
     return {
-        "file": file_path,
+        "file": str(full_path),
         "rows": row_count,
         "columns": headers,
-        "note": "Structure only. No data rows returned."
     }
 
 
 inspect_csv_tool = FunctionTool(
     inspect_csv,
     name="inspect_csv",
-    description="Inspect CSV structure (columns + row count). No data rows returned.",
-    strict=True
+    description="Inspect CSV structure"
 )
 
+
 def read_csv(file_path: str) -> dict:
-    
-    try:
-        if not os.path.exists(file_path):
-            return {"error": f"File not found: {file_path}"}
 
-        if not file_path.lower().endswith(".csv"):
-            return {"error": "Only .csv files are supported by read_csv."}
+    full_path = BASE_DIR / file_path
 
-        encodings_to_try = ["utf-8", "ISO-8859-1"]
-        last_error = None
+    if not full_path.exists():
+        return {"error": f"File not found: {full_path}"}
 
-        max_rows= 10
+    df = pd.read_csv(full_path)
 
-        for encoding in encodings_to_try:
-            try:
-                with open(file_path, "r", encoding=encoding, newline="") as f:
-                    reader = csv.DictReader(f)
-                    headers = reader.fieldnames or []
-                    rows = []
+    return {
+        "headers": list(df.columns),
+        "rows": df.head(10).to_dict(orient="records"),
+    }
 
-                    for i, row in enumerate(reader):
-                        if i >= max_rows:
-                            break
-                        rows.append(row)
-
-                return {
-                    "encoding_used": encoding,
-                    "headers": headers,
-                    "rows": rows,
-                    "note": f"Showing first {len(rows)} rows"
-                }
-
-            except UnicodeDecodeError as e:
-                last_error = e
-                continue
-
-        return {
-            "error": "Failed to decode CSV with supported encodings",
-            "details": str(last_error),
-        }
-
-    except Exception as e:
-        return f"error: {e}"
 
 read_csv_tool = FunctionTool(
     read_csv,
     name="read_csv",
-    description="Reads a csv files and returns headers and rows"
+    description="Read CSV"
 )
 
 
 def write_csv(file_path: str, rows: List[Dict[str, Any]]) -> str:
-    
-    try:
-        if not file_path.lower().endswith(".csv"):
-            return "Error: Only .csv files are supported by write_csv."
 
-        if not rows:
-            return "Error: rows is empty. Provide at least one row."
+    full_path = BASE_DIR / file_path
 
+    df = pd.DataFrame(rows)
+    df.to_csv(full_path, index=False)
 
-        headers = list(rows[0].keys())
-        with open(file_path, "a", encoding="utf-8", newline="") as f:
-            writer = csv.DictWriter(f, fieldnames=headers)
-            writer.writeheader()
-            writer.writerows(rows)
+    return f"Wrote CSV to {full_path}"
 
-        return f"Wrote CSV file: {file_path}"
-
-    except Exception as e:
-        return f"Error:{e}"
 
 write_csv_tool = FunctionTool(
     write_csv,
     name="write_csv",
-    description="Appends the provided entries to the end of the .csv file."
+    description="Write CSV"
 )
 
-def load_csv_to_sqlite(
-    csv_path: str,
-    db_path: str,
-    table_name: str
-) -> str:
-   
-    try:
-        if not os.path.exists(csv_path):
-            return f"Error: File not found: {csv_path}"
 
-        conn = sqlite3.connect(db_path)
+def load_csv_to_sqlite(csv_path: str, db_path: str, table_name: str) -> str:
 
-        for chunk in pd.read_csv(csv_path, chunksize=50_000):
-            chunk.to_sql(
-                table_name,
-                conn,
-                if_exists="replace",
-                index=False
-            )
+    csv_full = BASE_DIR / csv_path
+    db_full = BASE_DIR / db_path
 
-        conn.close()
-        return f"CSV '{csv_path}' loaded into SQLite table '{table_name}'."
-    
-    except Exception as e:
-        return f"Error loading CSV: {e}"
+    if not csv_full.exists():
+        return f"Error: File not found: {csv_full}"
+
+    conn = sqlite3.connect(db_full)
+
+    df = pd.read_csv(csv_full)
+    df.to_sql(table_name, conn, if_exists="replace", index=False)
+
+    conn.close()
+
+    return f"Loaded {csv_full} into {db_full} as table '{table_name}'"
 
 
 load_csv_tool = FunctionTool(
     load_csv_to_sqlite,
     name="load_csv_to_sqlite",
-    description="Load a CSV file into SQLite as a table (chunked, safe).",
-    strict=True
+    description="Load CSV into SQLite"
 )
 
 
 def read_txt(file_path: str) -> str:
-    try:
-        if not file_path.lower().endswith(".txt"):
-            return "Error: Only .txt files supported."
 
-        if not os.path.exists(file_path):
-            return f"Error: File not found: {file_path}"
+    full_path = BASE_DIR / file_path
 
-        with open(file_path, "r", encoding="utf-8") as f:
-            return f.read()
-    except Exception as e:
-        return f"{e}"
+    if not full_path.exists():
+        return f"File not found: {full_path}"
 
+    return full_path.read_text()
 
-def write_txt(file_path: str, content: str) -> str:
-    try:
-        if not file_path.lower().endswith(".txt"):
-            return "Error: Only .txt files supported."
-
-        os.makedirs(os.path.dirname(file_path) or ".", exist_ok=True)
-
-        with open(file_path, "w", encoding="utf-8") as f:
-            f.write(content)
-
-        return f"Wrote file: {file_path}"
-    
-    except Exception as e:
-        return f"{e}"
-
-def append_txt(file_path: str, content: str) -> str:
-    try:
-        if not file_path.lower().endswith(".txt"):
-            return "Error: Only .txt files are supported by append_txt."
-
-        with open(file_path, "a", encoding="utf-8") as f:
-            f.write(content)
-
-        return f"Appended to text file: {file_path}"
-    
-    except Exception as e:
-        return f"{e}"
 
 read_txt_tool = FunctionTool(
     read_txt,
     name="read_txt",
-    description="Read a .txt file and return its content.",
-    strict=True
+    description="Read .txt file" 
 )
+
+
+def write_txt(file_path: str, content: str) -> str:
+
+    full_path = BASE_DIR / file_path
+    full_path.write_text(content)
+
+    return f"Wrote file {full_path}"
+
 
 write_txt_tool = FunctionTool(
     write_txt,
     name="write_txt",
-    description="Write content to a .txt file (overwrite).",
-    strict=True
+    description="Write .txt file"
 )
+
+
+def append_txt(file_path: str, content: str) -> str:
+
+    full_path = BASE_DIR / file_path
+
+    with open(full_path, "a") as f:
+        f.write(content)
+
+    return f"Appended to {full_path}"
+
 
 append_txt_tool = FunctionTool(
     append_txt,
     name="append_txt",
-    description="Append content to a .txt file.",
-    strict=True
+    description="Append to .txt file"
 )
 
 FILE_TOOLS = [
     inspect_csv_tool,
-    load_csv_tool,
     read_csv_tool,
     write_csv_tool,
+    load_csv_tool,
     read_txt_tool,
     write_txt_tool,
-    append_txt_tool
+    append_txt_tool,
 ]

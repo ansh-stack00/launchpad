@@ -1,11 +1,15 @@
 import sqlite3
 import traceback
+from typing import Dict, Any
 from autogen_core.tools import FunctionTool
 
-db_path = "sales.db"
+from pathlib import Path
+
+BASE_DIR = Path(__file__).resolve().parent.parent
+db_path = str(BASE_DIR / "sales.db")
 
 
-def extract_schema(db_path):
+def extract_schema(db_path: str) -> Dict[str, Any]:
 
     conn = sqlite3.connect(db_path)
     cursor = conn.cursor()
@@ -38,44 +42,19 @@ def extract_schema(db_path):
     return schema
 
 
-schema_cache = extract_schema(db_path)
+def _is_read_only_sql(sql: str) -> bool:
+    return sql.strip().lower().startswith(("select", "with"))
 
-valid_columns = {
-    table: {col["column"].lower() for col in cols}
-    for table, cols in schema_cache.items()
-}
-
-
-def _is_read_only_sql(sql):
-    sql = sql.strip().lower()
-    return sql.startswith("select") or sql.startswith("with")
-
-
-def validate_sql(sql):
-
-    tokens = sql.lower().replace(",", " ").split()
-
-    for token in tokens:
-        for table_cols in valid_columns.values():
-            if token in table_cols:
-                break
-        else:
-            if token.isidentifier():
-                return False, f"Unknown column: {token}"
-
-    return True, None
-
-
-def schema_aware_query(db_path, sql, max_rows):
+def schema_aware_query(
+    db_path: str,
+    sql: str,
+    max_rows: int
+) -> Dict[str, Any]:
 
     try:
 
         if not _is_read_only_sql(sql):
-            return {"error": "Only SELECT/WITH queries allowed."}
-
-        ok, err = validate_sql(sql)
-        if not ok:
-            return {"error": err}
+            return {"error": "Only SELECT/WITH queries allowed"}
 
         conn = sqlite3.connect(db_path)
         cursor = conn.cursor()
@@ -96,15 +75,14 @@ def schema_aware_query(db_path, sql, max_rows):
     except Exception:
         return {"error": traceback.format_exc()}
 
-
 schema_query_tool = FunctionTool(
     schema_aware_query,
     name="schema_aware_query",
-    strict=True
+    description="Run read-only SQL on SQLite",
 )
 
 extract_schema_tool = FunctionTool(
     extract_schema,
-    name="extract_schema_tool",
-    strict=True
+    name="extract_schema",
+    description="Extract DB schema",
 )

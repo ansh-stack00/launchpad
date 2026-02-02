@@ -1,159 +1,264 @@
-import os
+import json
+import re
 import asyncio
-from dotenv import load_dotenv
-from autogen_ext.models.openai import OpenAIChatCompletionClient
-from day3.agents.code_gen_agent import CodeGen_agent
-from day3.agents.test_code_agent import code_agent
-from day3.agents.file_agent import  file_agent
-from day3.agents.DB_agent import Db_agent
+from typing import List, Literal
+from pydantic import BaseModel, ValidationError
+from autogen_agentchat.messages import TextMessage
+from autogen_core import CancellationToken
+from day3.agents.test_code_agent import CodeAgent
+from day3.agents.DB_agent import DBAgent
+from day3.agents.file_agent import FileAgent
 from autogen_agentchat.agents import AssistantAgent
-from autogen_core.tools import FunctionTool
+from autogen_ext.models.openai import OpenAIChatCompletionClient
+import os 
+from dotenv import load_dotenv
+
 load_dotenv()
 
-model_client = OpenAIChatCompletionClient(
-    model="llama-3.3-70b-versatile", 
-    base_url="https://api.groq.com/openai/v1",  
-    api_key=os.getenv('api_key'),
-    model_info={
-        "vision": True,
-        "function_calling": True,
-        "json_output": True,
-        "family": "llama-3.3",
-        "structured_output": True,
-    }    
-)
 
-async def call_codegen_agent(task: str) -> str:
-    result = await CodeGen_agent.run(task=task)
-    return result.messages[-1].content
-
-codegen_tool = FunctionTool(
-    call_codegen_agent,
-    "Generate Python code based on a task."
-)
-
-async def call_codeexec_agent(task: str) -> str:
-    result = await code_agent.run(task=task)
-    return result.messages[-1].content
-
-codeexec_tool = FunctionTool(
-    call_codeexec_agent,
-    "Execute Python code and return output."
-)
-
-async def call_file_agent(task: str) -> str:
-    result = await file_agent.run(task=task)
-    return result.messages[-1].content
-
-file_tool = FunctionTool(
-    call_file_agent,
-    "Call File Agent to read or write files. Provide task like 'Save this code to analysis.py'."
-)
-async def call_db_agent(task: str) -> str:
-    result = await Db_agent.run(task=task)
-    return result.messages[-1].content
-
-db_tool = FunctionTool(
-    call_db_agent,
-    "Use DB Agent to inspect schema or run SQL queries."
-)
+AgentName = Literal["FileAgent", "DBAgent", "CodeAgent"]
 
 
+class PlanStep(BaseModel):
+    agent: AgentName
+    instruction: str
 
-SYSTEM_PROMPT = """
-You are a General Orchestrator Agent.
+class ExecutionPlan(BaseModel):
+    steps: List[PlanStep]
 
-You NEVER perform the task yourself.
 
-You have access to these helper agents:
-- File Agent: for reading/writing txt and csv files
-- CodeGen Agent: for generating Python code
-- CodeExec Agent: for executing Python code
-- DB Agent: for answering database questions
+def extract_json(text: str):
+    match = re.search(r"\{.*\}", text, re.DOTALL)
+    if not match:
+        raise ValueError(f"No JSON found:\n{text}")
+    return json.loads(match.group())
 
-CRITICAL RULES:
-- NEVER write SQL yourself.
-- NEVER write Python code yourself.
-- ALWAYS pass the user's request in NATURAL LANGUAGE to the appropriate agent.
-- The DB Agent is the ONLY agent allowed to generate SQL.
-- If the user asks about database data, forward the request AS-IS to the DB Agent.
-- If the user asks to generate and run code → always call CodeGenAgent then CodeExecAgent
-- Never assume outputs; always get them from the actual agent
-- Always use natural language when routing tasks to agents
+
+PLANNER_SYSTEM_PROMPT = f"""
+You are an Orchestrator Planner.
 
 Your job:
-1. Understand the user intent
-2. Decide which agent(s) can handle it
-3. Call them with a clear natural-language task
-4. Return the final answer
+1. Read the user request
+2. Create a step-by-step execution plan
+3. Decide which agent should do each step
+4. Keep in mind the Data Paths as the database is shared among the Agents (Database path : "sales.db")
 
-Do not transform the task into SQL or code.
+AVAILABLE AGENTS:
+Each Agent is inpedendepnt and has specific roles
+- FileAgent: inspect CSV, load CSV into SQLite, read/write .txt for the given path
+- DBAgent: run SELECT/WITH SQL queries on SQLite (Only limited to reading Queries)
+- CodeAgent: can GENERATE and  EXECUTES Python code as provided
 
-### FEW-SHOT EXAMPLES
+STRICT RULES:
+- Each Agent has independent roles as specified .
+- The ORDER OF CALLING OF AGENTS IS CRITICAL and Output messages are shared sequentially Only, so generate the tasks in dependency order if the agents are dependent on each other.
+- CSV data MUST be loaded into SQLite before  csv queries and analysis
+- NEVER analyze CSV directly
+- DBAgent must be used for all data analysis
+- CodeAgent is OPTIONAL and only for computation
+- FileAgent NEVER writes code or Queries
+- Do NOT skip required steps
+- ALWAYS provide the Database path to DBAgent
+- DO NOT generate SQL, Give Simple Command to DBAgent if required.
+- Planner NEVER writes SQL queries.
+- Planner gives high-level analytical instructions ad DB path only.
+- DBAgent is responsible for converting instructions into SQL.
+- Each DBAgent step must describe the independent analysis goal, not SQL syntax.
+- Planner Should generate individual DBAgent tasks.
+Output must strictly follow the provided schema.
+Do not include explanations or extra text.
+ONLY return JSON.
+"""
 
-#### User:
-Generate Python code that reads sales_data_sample.csv, computes top 5 products by revenue, and print the result
+class LLMOrchestrator:
+    def __init__(self, planner_llm, file_agent, db_agent, code_agent, summarizer_agent):
+        self.planner_llm = planner_llm
+        self.file_agent = file_agent
+        self.db_agent = db_agent
+        self.code_agent = code_agent
+        self.summarizer_agent = summarizer_agent
 
-#### Orchestrator Plan:
-1. Call CodeGenAgent with the user task and get the generated code 
-2. Call CodeExecutorAgent with: "Please execute this code:\n[generated_code]"
-4. Return both the code and the printed output
+        self.execution_log = []
 
----
+    async def run(self, user_query: str) -> str:
+        plan = await self._generate_plan(user_query)
+        results = await self._execute_plan(plan)
+        return await self.summarize_results(results)
 
-#### User:
-Summarize the content of report.txt and save it in summary.txt
+    async def _generate_plan(self, user_query: str) -> ExecutionPlan:
+        cancellation_token = CancellationToken()
 
-#### Orchestrator Plan:
-1. Call FileAgent to read report.txt
-2. Send the content to CodeGenAgent with prompt: "Summarize this text into 3 bullet points:\n[data]"
-3. Call CodeExecutorAgent with the generated summarizer code
-4. Call FileAgent to save output into summary.txt
+        response = await self.planner_llm.on_messages(
+            [
+                TextMessage(content=PLANNER_SYSTEM_PROMPT, source="system"),
+                TextMessage(content=user_query, source="user"),
+            ],
+            cancellation_token=cancellation_token,
+        )
 
-User:
-Generate Python code and execute it to analyze sales_data.csv
+        raw_content = response.chat_message.content
+        print("RAW PLANNER OUTPUT:\n", raw_content)
 
-Orchestrator Plan:
-1. Call CodeGenAgent with user task
-2. Get code
-3. Call CodeExecAgent with that code
-4. Return both code and output
+        try:
+            plan_dict = extract_json(raw_content)
+            plan = ExecutionPlan(**plan_dict)
+            return plan
+        except (json.JSONDecodeError, ValidationError) as e:
+            raise RuntimeError(f"Invalid execution plan:\n{e}\n\nRAW:\n{raw_content}")
 
-IMPORTANT:
-- You may need to call multiple tools in sequence
-- Always continue execution until the full user request is fulfilled
-- When calling the CodeExec agent, pass the full code string directly in the `code` field.
-- Do NOT pass variable names like `generated_code`. They are not defined.
-- For example, use: {"code": "print('Hello world')"} NOT {"code": "generated_code"}
 
+    async def _execute_plan(self, plan: ExecutionPlan) -> str:
+
+        results = [] 
+
+        for idx, step in enumerate(plan.steps, 1):
+
+            agent = self._get_agent(step.agent)
+
+            context = self._build_context(step, results)
+
+            response = await agent.on_messages(
+                [TextMessage(content=context, source="orchestrator")],
+                cancellation_token=CancellationToken(),
+            )
+
+            output_text = response.chat_message.content
+            agent_name = agent.name
+
+            results.append({
+                "agent": agent_name,
+                "instruction": step.instruction,
+                "output": output_text
+            })
+
+            self.execution_log.append({
+                "step": idx,
+                "agent": step.agent,
+                "instruction": step.instruction,
+                "output": output_text
+            })
+
+        return self._final_response()
+
+    def _build_context(self,step,results):
+        results = results[-3:]
+
+        return f"""
+You are performing a step in a multi-agent workflow.
+
+CURRENT TASK:
+{step.instruction}
+
+RELEVANT PREVIOUS RESULTS:
+{results}
+
+Use previous outputs if needed.
+RETURN ONLY YOUR RESULT.
 """
 
 
+    def _get_agent(self, agent_name: str):
+        if agent_name == "FileAgent":
+            return self.file_agent
+        if agent_name == "DBAgent":
+            return self.db_agent
+        if agent_name == "CodeAgent":
+            return self.code_agent
 
-orchestrator_agent = AssistantAgent(
-    name="orchestrator",
-    model_client=model_client,
-    system_message=SYSTEM_PROMPT,
-    tools=[file_tool,codegen_tool,codeexec_tool,db_tool],
+        raise ValueError(f"Unknown agent: {agent_name}")
 
+    def _final_response(self) -> str:
+        lines = ["### Execution Complete\n"]
+
+        for entry in self.execution_log:
+            lines.append(f"#### Step {entry['step']} — {entry['agent']}")
+            lines.append(f"Instruction: {entry['instruction']}")
+            lines.append("Output:")
+            lines.append(str(entry["output"]))
+            lines.append("")
+
+        return "\n".join(lines)
+    
+    async def summarize_results(self,results:str)->str:
+        agent = self.summarizer_agent
+        print(f"\n\n{results}\n\n")
+        response = await agent.on_messages(
+                [
+                    TextMessage(
+                        content=results,
+                        source="orchestrator"
+                    )
+                ],
+                cancellation_token=CancellationToken(),
+
+            )
+
+        return response.chat_message.content
+
+
+
+planner_model = OpenAIChatCompletionClient(
+    model="openai/gpt-oss-20b",
+    base_url="https://api.groq.com/openai/v1",
+    api_key=os.getenv("api_key"),
+    model_info={
+        "family": "llama",
+        "context_length": 8192,
+        "vision":True,
+        "function_calling": False,
+        "json_output": False,
+        "structured_output": True
+    },
+    response_format = ExecutionPlan
 )
 
+PlannerAgent = AssistantAgent(
+    name="PlannerAgent",
+    model_client=planner_model,
+    system_message="You generate execution plans only."
+)
+
+
+
+summarizer_model = OpenAIChatCompletionClient(
+    model="openai/gpt-oss-20b",
+    base_url="https://api.groq.com/openai/v1",
+    api_key=os.getenv("api_key"),
+    model_info={
+        "family": "llama",
+        "context_length": 8192,
+        "vision":True,
+        "function_calling": False,
+        "json_output": False,
+        "structured_output": True
+    },
+)
+
+summarizer_agent = AssistantAgent(
+    name="Summarizer_Agent",
+    description="Summarizes the resultsextracted from all the agents",
+    model_client=summarizer_model,
+    system_message="You are a Summarizer Agent.Your task is to summarize the results generated from different agents and give the user output in human readable format."
+)
+
+
+orchestrator = LLMOrchestrator(
+    planner_llm=PlannerAgent,
+    file_agent=FileAgent,
+    db_agent=DBAgent,
+    code_agent=CodeAgent,
+    summarizer_agent= summarizer_agent
+)
+
+
+
 async def main():
-    task = input("User Task: ")  
-    result = await orchestrator_agent.run(task=task)
+    user_query = "Analyze sales.csv and generate top 5 insights"
+    # user_query = "Write a python code to check 27 is prime or not , execute it and return the output"
+    
+    result = await orchestrator.run(user_query)
 
-    final_message = result.messages[-1].content
-# code execution fallback    
-    if "```python" in final_message:
-        code = final_message.split("```python")[1].split("```")[0].strip()
+    print(result)
 
-        print("\nCode Generated:\n", code)
-        exec_result = await code_agent.run(
-            task=f"Please execute this code:\n{code}"
-        )
-
-        print("\nCode Output:\n", exec_result.messages[-1].content)
-    else:
-        print("\nFinal Result:\n", final_message)
-
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
