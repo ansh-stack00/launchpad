@@ -1,0 +1,10 @@
+services:
+  ollama:
+    image: alpine/ollama:0.12.10
+    container_name: ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama:/root/.ollama
+volumes:
+  ollama:
