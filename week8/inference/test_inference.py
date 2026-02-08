@@ -1,90 +1,176 @@
-%%writefile test_inference.py
-import torch
 import time
-import csv
-import os
-from transformers import AutoTokenizer, AutoModelForCausalLM
+import torch
+import psutil
+import pandas as pd
+from llama_cpp import Llama
+from sentence_transformers import SentenceTransformer, util
 
 
-MODEL_NAME = "finetuned"  
-# MODEL_PATH = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
-MODEL_PATH = "merged/merged_model"
+GGUF_MODEL = "./quantized/model.gguf"
+PROMPTS = [
+    """### Instruction:
+Answer the medical question accurately.
 
-PROMPT = """
-<|user|>
-Instruction: Calculate overhead rate.
-Input: Total manufacturing overhead: $200,000, Direct labor hours: 10,000.
-<|assistant|>
+### Input:
+What are the treatments for Heart Attack ?
+
+### Response:
+""",
+
+    """### Instruction:
+Answer the medical question accurately.
+
+### Input:
+What is (are) Low Vision ?
+
+### Response:
+""",
+
+    """### Instruction:
+Answer the medical question accurately.
+
+### Input:
+Is Ovarian Epithelial, Fallopian Tube, and Primary Peritoneal Cancer inherited ?
+
+### Response:
 """
-
-MAX_NEW_TOKENS = 120
-RESULTS_FILE = "benchmarks/results.csv"
+]
 
 
-device = "cuda" if torch.cuda.is_available() else "cpu"
+GROUND_TRUTH = [
+    "Heart attack treatment focuses on quickly restoring blood flow using thrombolytic drugs or angioplasty, followed by cardiac rehabilitation, lifestyle changes, and medications to prevent further damage.",
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-model = AutoModelForCausalLM.from_pretrained(
-    MODEL_PATH,
-    torch_dtype=torch.float16 if device == "cuda" else torch.float32,
-    device_map="auto"
-)
+    "People with low vision can receive support services such as vision rehabilitation, counseling, recreation programs, and job training through community and state agencies for the visually impaired.",
 
-inputs = tokenizer(PROMPT, return_tensors="pt").to(device)
+    "About 20% of ovarian, fallopian tube, and primary peritoneal cancers are caused by inherited gene mutations, often associated with breast or colon cancer, and genetic testing is recommended for high-risk families."
+]
 
 
-torch.cuda.empty_cache()
-start = time.time()
+embedder = SentenceTransformer("sentence-transformers/all-MiniLM-L6-v2")
 
-with torch.no_grad():
-    outputs = model.generate(
-        **inputs,
-        max_new_tokens=MAX_NEW_TOKENS,
-        do_sample=False
-    )
+def get_vram():
+    if torch.cuda.is_available():
+        return torch.cuda.memory_allocated() / 1024**2
+    return 0
 
-end = time.time()
+def accuracy(preds, refs):
+    p_emb = embedder.encode(preds, convert_to_tensor=True)
+    r_emb = embedder.encode(refs, convert_to_tensor=True)
 
-tokens_generated = outputs.shape[1] - inputs["input_ids"].shape[1]
-latency = end - start
-tokens_per_sec = tokens_generated / latency
+    sims = util.cos_sim(p_emb, r_emb)
 
-vram_used = None
-if torch.cuda.is_available():
-    vram_used = torch.cuda.max_memory_allocated() / 1024**2 
+    per_sample_scores = sims.diag().cpu().numpy()
 
-output_text = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    # for i, score in enumerate(per_sample_scores):
+    #     print(f"Sample {i+1} Similarity: {score:.3f}")
 
-print("\n.... OUTPUT ...")
-print(output_text)
-print("end")
+    mean_score = per_sample_scores.mean()
 
-print(f"Model: {MODEL_NAME}")
-print(f"Tokens generated: {tokens_generated}")
-print(f"Latency (s): {latency:.2f}")
-print(f"Tokens/sec: {tokens_per_sec:.2f}")
-print(f"VRAM used (MB): {vram_used}")
+    return mean_score
 
 
-os.makedirs("../benchmarks", exist_ok=True)
-file_exists = os.path.isfile(RESULTS_FILE)
 
-with open(RESULTS_FILE, "a", newline="") as f:
-    writer = csv.writer(f)
-    if not file_exists:
-        writer.writerow([
-            "model",
-            "device",
-            "tokens_generated",
-            "latency_sec",
-            "tokens_per_sec",
-            "vram_mb"
-        ])
-    writer.writerow([
-        MODEL_NAME,
-        device,
-        tokens_generated,
-        round(latency, 3),
-        round(tokens_per_sec, 2),
-        round(vram_used, 2) if vram_used else "CPU"
-    ])
+
+def benchmark_gguf(label):
+    llm = Llama(model_path=GGUF_MODEL, n_ctx=2048, n_threads=8, verbose=False)
+
+    outputs = []
+    start = time.time()
+
+    for p in PROMPTS:
+        response = ""
+        stream = llm(p, max_tokens=256, stream=True)
+
+        for output in stream:
+            token = output["choices"][0]["text"]
+            response += token
+            # print(token, end="", flush=True)
+
+        # print("\n \n")
+        outputs.append(response)
+
+    end = time.time()
+
+    tokens = sum(len(o.split()) for o in outputs)
+    tps = tokens / (end - start)
+    acc = accuracy(outputs, GROUND_TRUTH)
+
+    return {
+        "Model": label,
+        "Tokens/sec": round(tps, 2),
+        "Latency(s)": round(end - start, 2),
+        "VRAM(MB)": 0,
+        "Accuracy": round(acc, 3)
+    }
+
+results = []
+
+results.append(benchmark_gguf("GGUF Q4 llama.cpp"))
+
+
+from transformers import AutoTokenizer, AutoModelForCausalLM, TextIteratorStreamer
+
+import threading
+
+BASE_MODEL = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+FT_MODEL = "./quantized/fp16-merged"
+
+DEVICE = "cuda" if torch.cuda.is_available() else "cpu"
+RESULTS_PATH = "results.csv"
+
+
+
+def benchmark_hf(model_path, label):
+        
+    tokenizer = AutoTokenizer.from_pretrained(model_path)
+    model = AutoModelForCausalLM.from_pretrained(model_path, device_map=DEVICE)
+
+    outputs = []
+    start = time.time()
+
+    for prompt in PROMPTS:
+        streamer = TextIteratorStreamer(tokenizer, skip_special_tokens=True)
+        inputs = tokenizer(prompt, return_tensors="pt").to(DEVICE)
+
+        generation_kwargs = dict(
+            **inputs,
+            max_new_tokens=256,
+            streamer=streamer,
+            pad_token_id=tokenizer.eos_token_id 
+        )
+
+        thread = threading.Thread(target=model.generate, kwargs=generation_kwargs)
+        thread.start()
+
+        response = ""
+        for token in streamer:
+            response += token
+        #     print(token, end="", flush=True)
+
+        # print("\n \n")
+        outputs.append(response)
+        thread.join()
+
+    end = time.time()
+
+    total_tokens = sum(len(tokenizer.encode(r)) for r in outputs)
+    duration = end - start
+    tps = total_tokens / duration
+    acc = accuracy(outputs, GROUND_TRUTH)
+
+    return {
+        "Model": label,
+        "Tokens/sec": round(tps, 2),
+        "Latency(s)": round(duration, 2),
+        "VRAM(MB)": round(get_vram(), 2),
+        "Accuracy": round(acc, 3)
+    }
+
+
+results.append(benchmark_hf(BASE_MODEL, "Base Model"))
+results.append(benchmark_hf(FT_MODEL, "Fine-tuned"))
+
+df = pd.DataFrame(results)
+df.to_csv(RESULTS_PATH, index=False)
+
+print(df)
